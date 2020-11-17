@@ -45,7 +45,7 @@ class BaseService
         } elseif (in_array($key, $this->businessContainerKey)) {
             return $this->getBusinessContainerInstance($key);
         } elseif (substr($key, -5) == 'Model') {
-            $key = strstr($key, 'Model', true);
+           // $key = strstr($key, 'Model', true);
             return $this->getModelInstance($key);
         } elseif (substr($key, -7) == 'Service') {
             return $this->getServiceInstance($key);

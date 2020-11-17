@@ -40,7 +40,7 @@ return [
             'gen:model' => [
                 'path' => 'app/Model/BaseModel',
                 'force_casts' => true,
-                'inheritance' => 'Model',
+                'inheritance' => '\App\Model\Model',
                 'uses' => '',
                 'refresh_fillable'=>true,
                 'with_comments'=>true,
