@@ -9,6 +9,7 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 namespace App\Controller;
 
 use App\Constants\StatusCode;
@@ -35,30 +36,24 @@ abstract class AbstractController
     /**
      * success
      * 成功返回请求结果
-     * User：YM
-     * Date：2019/11/20
-     * Time：下午3:56
+     * @param string $msg
      * @param array $data
-     * @param null $msg
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function success($data = [], $msg = null)
+    protected function success($msg = '', $data = [])
     {
-        return $this->response->success($data,$msg);
+        return $this->response->success($msg, $data);
     }
 
     /**
      * error
      * 业务相关错误结果返回
-     * User：YM
-     * Date：2019/11/20
-     * Time：下午3:56
+     * @param string $msg
      * @param int $code
-     * @param null $msg
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function error($code = StatusCode::ERR_EXCEPTION, $msg = null)
+    protected function error($msg = '', $code = StatusCode::ERR_EXCEPTION)
     {
-        return $this->response->error($code,$msg);
+        return $this->response->error($code, $msg);
     }
 }

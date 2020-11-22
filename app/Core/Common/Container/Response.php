@@ -1,26 +1,23 @@
 <?php
 /**
- * Created by PhpStorm.
- *​
- * ReqResponse.php
- *
- * User：YM
- * Date：2019/11/15
- * Time：下午5:35
- */
+ * YardOpen
+ * Created by 大宇  Mars
+ * Create Date 2020/11/21-22:57
+ * Team Name HornIOT
+ **/
 
 
 namespace Core\Common\Container;
 
+use App\Constants\StatusCode;
+use Core\Common\Facade\Log;
 use Hyperf\Di\Annotation\Inject;
+use Hyperf\HttpMessage\Cookie\Cookie;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
-use Hyperf\HttpMessage\Cookie\Cookie;
-use App\Constants\StatusCode;
 use Hyperf\Utils\Context;
-use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use Hyperf\Utils\Coroutine;
-use Core\Common\Facade\Log;
+use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 
 /**
  * ReqResponse
@@ -47,20 +44,17 @@ class Response
     /**
      * success
      * 成功返回请求结果
-     * User：YM
-     * Date：2019/11/19
-     * Time：上午11:04
+     * @param string $msg
      * @param array $data
-     * @param string|null $msg
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function success($data = [], string $msg = null)
+    public function success(string $msg = '', $data = [])
     {
         $msg = $msg ?? StatusCode::getMessage(StatusCode::SUCCESS);;
         $out_data = [
             'qid' => $this->request->getHeaderLine('qid'),
             'code' => StatusCode::SUCCESS,
-            'msg'=> $msg,
+            'msg' => $msg,
             'data' => $data
         ];
         $response = $this->response->json($out_data);
@@ -68,7 +62,7 @@ class Response
         $rbs = strlen($response->getBody()->getContents());
         // 获取日志实例，记录日志
         $logger = Log::get(requestEntry(Coroutine::getBackTrace()));
-        $logger->info($msg,getLogArguments($executionTime,$rbs));
+        $logger->info($msg, getLogArguments($executionTime, $rbs));
 
         return $response;
     }
@@ -89,7 +83,7 @@ class Response
         $data = [
             'qid' => $this->request->getHeaderLine('qid'),
             'code' => $code,
-            'msg'=> $msg,
+            'msg' => $msg,
         ];
 
         return $this->response->json($data);
@@ -134,9 +128,9 @@ class Response
      * @param int $status
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function redirect(string $url,string $schema = 'http', int $status = 302 )
+    public function redirect(string $url, string $schema = 'http', int $status = 302)
     {
-        return $this->response->redirect($url,$status,$schema);
+        return $this->response->redirect($url, $status, $schema);
     }
 
     /**
@@ -151,7 +145,7 @@ class Response
      */
     public function download(string $file, string $name = '')
     {
-        return $this->response->download($file,$name);
+        return $this->response->download($file, $name);
     }
 
     /**
@@ -170,12 +164,12 @@ class Response
      * @param bool $raw
      * @param null|string $sameSite
      */
-    public function cookie(string $name,string $value = '', $expire = 0, string $path = '/', string $domain = '', bool $secure = false, bool $httpOnly = true, bool $raw = false, ?string $sameSite = null)
+    public function cookie(string $name, string $value = '', $expire = 0, string $path = '/', string $domain = '', bool $secure = false, bool $httpOnly = true, bool $raw = false, ?string $sameSite = null)
     {
         // convert expiration time to a Unix timestamp
         if ($expire instanceof \DateTimeInterface) {
             $expire = $expire->format('U');
-        } elseif (! is_numeric($expire)) {
+        } elseif (!is_numeric($expire)) {
             $expire = strtotime($expire);
             if ($expire === false) {
                 throw new \RuntimeException('The cookie expiration time is not valid.');
