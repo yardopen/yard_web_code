@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * YardOpen
+ * Created by 大宇  Mars
+ * Create Date 2020/11/21-22:57
+ * Team Name HornIOT
+ **/
+declare (strict_types=1);
 
 namespace Core\Repository;
 
@@ -19,18 +26,28 @@ class BaseRepository
     /**
      * Created by PhpStorm.
      * 可以实现自动注入的业务容器
-     * User：YM
-     * Date：2020/1/12
-     * Time：上午8:18
      */
-    protected $businessContainerKey = ['auth','adminPermission'];
+    protected $businessContainerKey = ['auth', 'adminPermission'];
+
+
+    /**
+     * @param int $code
+     * @param string $msg
+     * @param array $data
+     * @return array
+     */
+    protected function code(int $code = 200, string $msg = '', array $data = [])
+    {
+        return [
+            'code' => $code,
+            'msg' => $msg,
+            'data' => $data
+        ];
+    }
 
     /**
      * __get
      * 隐式注入服务类
-     * User：YM
-     * Date：2019/11/21
-     * Time：上午9:27
      * @param $key
      * @return \Psr\Container\ContainerInterface|void
      */
@@ -38,9 +55,9 @@ class BaseRepository
     {
         if ($key == 'app') {
             return $this->container;
-        } elseif (in_array($key,$this->businessContainerKey)) {
+        } elseif (in_array($key, $this->businessContainerKey)) {
             return $this->getBusinessContainerInstance($key);
-        }elseif (substr($key, -7) == 'Service') {
+        } elseif (substr($key, -7) == 'Service') {
             return $this->getServiceInstance($key);
         } else {
             throw new \RuntimeException("服务{$key}不存在，书写错误！", StatusCode::ERR_SERVER);
@@ -50,16 +67,13 @@ class BaseRepository
     /**
      * getBusinessContainerInstance
      * 获取业务容器实例
-     * User：YM
-     * Date：2020/1/12
-     * Time：上午8:15
      * @param $key
      * @return mixed
      */
-    public function getBusinessContainerInstance($key)
+    private function getBusinessContainerInstance($key)
     {
         $key = ucfirst($key);
-        $fileName = BASE_PATH."/app/Core/Common/Container/{$key}.php";
+        $fileName = BASE_PATH . "/app/Core/Common/Container/{$key}.php";
         $className = "Core\\Common\\Container\\{$key}";
 
         if (file_exists($fileName)) {
@@ -72,16 +86,13 @@ class BaseRepository
     /**
      * getServiceInstance
      * 获取服务类实例
-     * User：YM
-     * Date：2019/11/21
-     * Time：上午10:30
      * @param $key
      * @return mixed
      */
-    public function getServiceInstance($key)
+    private function getServiceInstance($key)
     {
         $key = ucfirst($key);
-        $fileName = BASE_PATH."/app/Core/Service/{$key}.php";
+        $fileName = BASE_PATH . "/app/Core/Service/{$key}.php";
         $className = "Core\\Service\\{$key}";
 
         if (file_exists($fileName)) {
@@ -90,4 +101,5 @@ class BaseRepository
             throw new \RuntimeException("服务{$key}不存在，文件不存在！", StatusCode::ERR_SERVER);
         }
     }
+
 }

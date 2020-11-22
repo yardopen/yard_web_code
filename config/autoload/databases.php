@@ -26,7 +26,7 @@ return [
             'connect_timeout' => 10.0,
             'wait_timeout' => 3.0,
             'heartbeat' => -1,
-            'max_idle_time' => (float) env('DB_MAX_IDLE_TIME', 60),
+            'max_idle_time' => (float)env('DB_MAX_IDLE_TIME', 60),
         ],
         'cache' => [
             'handler' => Hyperf\ModelCache\Handler\RedisHandler::class,
@@ -38,12 +38,12 @@ return [
         ],
         'commands' => [
             'gen:model' => [
-                'path' => 'app/Model/BaseModel',
+                'path' => 'app/Model',
                 'force_casts' => true,
-                'inheritance' => '\App\Model\Model',
+                'inheritance' => 'BaseModel',
                 'uses' => '',
-                'refresh_fillable'=>true,
-                'with_comments'=>true,
+                'refresh_fillable' => true,
+                'with_comments' => true,
                 'table_mapping' => [],
             ],
         ],

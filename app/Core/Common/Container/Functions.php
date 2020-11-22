@@ -3,8 +3,10 @@
 declare(strict_types=1);
 
 /**
- * Created by PhpStorm.
- * common.php
+ * YardOpen
+ * Created by 大宇  Mars
+ * Create Date 2020/11/21-22:57
+ * Team Name HornIOT
  *
  * 公共函数，避免功能性函数重复书写
  * 书写规范，必须使用function_exists()方法判断
@@ -220,171 +222,6 @@ if (!function_exists('delCookie')) {
     }
 }
 
-if (!function_exists('setSessionId')) {
-    /**
-     * setSessionId
-     * 设置sessionid
-     * User：YM
-     * Date：2019/12/19
-     * Time：下午6:56
-     * @param string $id
-     */
-    function setSessionId(string $id)
-    {
-        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
-        $session->setId($id);
-        return;
-    }
-}
-
-if (!function_exists('getSessionId')) {
-    /**
-     * getSessionId
-     * 获取sessionid
-     * User：YM
-     * Date：2019/12/19
-     * Time：下午6:56
-     */
-    function getSessionId()
-    {
-        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
-        return $session->getId();
-    }
-}
-
-if (!function_exists('setSession')) {
-    /**
-     * setSession
-     * 设置session
-     * User：YM
-     * Date：2019/12/19
-     * Time：下午5:59
-     * @param string $k
-     * @param $v
-     */
-    function setSession(string $k, $v)
-    {
-        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
-        $session->set($k, $v);
-        return;
-    }
-}
-
-if (!function_exists('getSession')) {
-    /**
-     * getSession
-     * 获取session
-     * User：YM
-     * Date：2019/12/19
-     * Time：下午7:32
-     * @param string $k
-     * @param null $default
-     * @return mixed
-     */
-    function getSession(string $k, $default = null)
-    {
-        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
-        return $session->get($k, $default);
-    }
-}
-
-if (!function_exists('getAllSession')) {
-    /**
-     * getAllSession
-     * 获取所有session
-     * User：YM
-     * Date：2019/12/19
-     * Time：下午7:32
-     * @return mixed
-     */
-    function getAllSession()
-    {
-        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
-        return $session->all();
-    }
-}
-
-
-if (!function_exists('hasSession')) {
-    /**
-     * hasSession
-     * 判断session是否存在
-     * User：YM
-     * Date：2019/12/19
-     * Time：下午7:52
-     * @param string $name
-     * @return bool
-     */
-    function hasSession(string $name)
-    {
-        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
-        return $session->has($name);
-    }
-}
-
-if (!function_exists('removeSession')) {
-    /**
-     * removeSession
-     * 从 Session 中获取并删除一条数据
-     * User：YM
-     * Date：2019/12/19
-     * Time：下午7:54
-     * @param string $name
-     * @return mixed
-     */
-    function removeSession(string $name)
-    {
-        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
-        return $session->remove($name);
-    }
-}
-
-if (!function_exists('forgetSession')) {
-    /**
-     * forgetSession
-     * 从session中删除一条或多条数据
-     * User：YM
-     * Date：2019/12/19
-     * Time：下午7:54
-     * @param $keys string|array
-     */
-    function forgetSession($keys)
-    {
-        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
-        $session->forget($keys);
-        return;
-    }
-}
-
-if (!function_exists('clearSession')) {
-    /**
-     * clearSession
-     * 清空当前 Session 里的所有数据
-     * User：YM
-     * Date：2019/12/19
-     * Time：下午7:56
-     */
-    function clearSession()
-    {
-        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
-        return $session->clear();
-    }
-}
-
-if (!function_exists('destroySession')) {
-    /**
-     * destroySession
-     * 销毁session
-     * User：YM
-     * Date：2019/12/19
-     * Time：下午7:56
-     */
-    function destroySession()
-    {
-        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
-        return $session->invalidate();
-    }
-}
 
 if (!function_exists('getLogArguments')) {
     /**
@@ -722,12 +559,15 @@ if (!function_exists('durationFormat')) {
 
     /**
      * 雪花算法ID生成
-     * @return int
+     * @return string
      */
     function snowFlakeId()
     {
-        return ApplicationContext::getContainer()->get(Hyperf\Snowflake\IdGeneratorInterface::class)->generate();
+        $id = ApplicationContext::getContainer()->get(Hyperf\Snowflake\IdGeneratorInterface::class)->generate();
+        return (string)$id;
     }
+
+
 }
 
 

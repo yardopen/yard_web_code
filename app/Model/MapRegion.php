@@ -1,7 +1,7 @@
 <?php
 
 declare (strict_types=1);
-namespace App\Model\BaseModel;
+namespace App\Model;
 
 /**
  * @property int $area_id 
@@ -9,24 +9,24 @@ namespace App\Model\BaseModel;
  * @property int $city_id 
  * @property int $sort 
  */
-class RegionArea extends \App\Model\Model
+class MapRegion extends BaseModel
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'region_area';
+    protected $table = 'map_region';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['area_id', 'area_name', 'city_id', 'sort'];
+    protected $fillable = ['region_id', 'region_name', 'city_id', 'sort'];
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $casts = ['area_id' => 'integer', 'city_id' => 'integer', 'sort' => 'integer'];
+    protected $casts = ['region_id' => 'integer', 'city_id' => 'integer', 'sort' => 'integer'];
 }

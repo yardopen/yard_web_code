@@ -52,7 +52,7 @@ class BaseController extends AbstractController
      * @param $key
      * @return mixed
      */
-    public function getRepositoriesInstance($key)
+    private function getRepositoriesInstance($key)
     {
         $key = ucfirst($key);
         $module = $this->getModuleName();
