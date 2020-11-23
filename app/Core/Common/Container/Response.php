@@ -48,7 +48,7 @@ class Response
      * @param array $data
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function success(string $msg = '', $data = [])
+    public function success(string $msg = '', array $data = [])
     {
         $msg = $msg ?? StatusCode::getMessage(StatusCode::SUCCESS);;
         $out_data = [

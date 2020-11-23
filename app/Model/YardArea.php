@@ -4,35 +4,36 @@ declare (strict_types=1);
 namespace App\Model;
 
 /**
- * @property int $area_id 区域ID
- * @property string $area_sn 区域sn编号
- * @property string $area_no 区数字编号
- * @property string $area_name 区域名称
- * @property float $area_size 建筑面积
- * @property int $area_type 区域类型 1办公间 2商铺  3住宅
- * @property int $is_Investment 是否可招商 1可以   2不可以
- * @property int $orientations 朝向 0未知  1东  2南  3西  4北
- * @property float $rental_price 租赁报价
- * @property int $rental_unit 租赁单元  1：元/㎡.月  2:元/㎡.天  3：元/月
- * @property int $renovation_type 装修 0未知  1简装   2精装   3毛坏
- * @property int $layout_type 户型 1：普通   2复式
- * @property int $bedroom_num 卧室数量
- * @property int $wc_room_num 卫生间数量
- * @property int $drawing_room_num 厅数量(客厅或饭厅)
- * @property string $introduce_imgs 区域图片
- * @property string $layout_img 户型图
- * @property string $introduce_video 区域视频
- * @property string $yard_sn 园区编号
- * @property string $build_sn 楼栋编号
- * @property string $floor_sn 楼层编号
- * @property int $creater_id 创建人ID
- * @property string $creater_name 创建人名称
- * @property int $modifyer_id 修改人ID
- * @property string $modifyer_name 修改人名称
- * @property \Carbon\Carbon $created_at 创建时间
- * @property \Carbon\Carbon $updated_at 修改时间
- * @property int $status 状态 1正常
- * @property string $remark 备注
+ * @property int $area_id 
+ * @property string $area_sn 
+ * @property string $area_no 
+ * @property string $area_name 
+ * @property float $area_size 
+ * @property int $area_type 
+ * @property int $is_Investment 
+ * @property int $orientations 
+ * @property float $rental_price 
+ * @property int $rental_unit 
+ * @property int $renovation_type 
+ * @property int $layout_type 
+ * @property int $bedroom_num 
+ * @property int $wc_room_num 
+ * @property int $drawing_room_num 
+ * @property string $introduce_imgs 
+ * @property string $layout_img 
+ * @property string $introduce_video 
+ * @property string $yard_sn 
+ * @property string $build_sn 
+ * @property string $floor_sn 
+ * @property int $creater_id 
+ * @property string $creater_name 
+ * @property int $modifyer_id 
+ * @property string $modifyer_name 
+ * @property \Carbon\Carbon $created_at 
+ * @property \Carbon\Carbon $updated_at 
+ * @property int $status 
+ * @property string $remark 
+ * @mixin \App_Model_YardArea
  */
 class YardArea extends BaseModel
 {

@@ -55,19 +55,10 @@ class BaseController extends AbstractController
     private function getRepositoriesInstance($key)
     {
         $key = ucfirst($key);
-        $module = $this->getModuleName();
-        if (!empty($module)) {
-            $module = "{$module}";
-        } else {
-            $module = "";
-        }
-        if ($module) {
-            $filename = BASE_PATH . "/app/Core/Repositories/{$module}/{$key}.php";
-            $className = "Core\\Repositories\\{$module}\\{$key}";
-        } else {
-            $filename = BASE_PATH . "/app/Core/Repositories/{$key}.php";
-            $className = "Core\\Repositories\\{$key}";
-        }
+
+        $filename = BASE_PATH . "/app/Core/Repository/{$key}.php";
+        $className = "Core\\Repository\\{$key}";
+
 
         if (file_exists($filename)) {
             return $this->container->get($className);

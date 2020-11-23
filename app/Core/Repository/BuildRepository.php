@@ -19,6 +19,13 @@ namespace Core\Repository;
 class BuildRepository extends BaseRepository
 {
 
+    public function list(array $param)
+    {
+        $columns=['build_sn','build_name','build_size','elevator_num',];
+        $res = $this->buildService->listBuild(['build_name' => $param['build_name']], $columns, $param['page'], $param['perPage']);
+        return $this->code(200, "楼栋列表", $res);
+    }
+
     /**
      * 创建楼栋
      * @param array $param

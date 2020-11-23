@@ -43,7 +43,7 @@ return [
                 'inheritance' => 'BaseModel',
                 'uses' => '',
                 'refresh_fillable' => true,
-                'with_comments' => true,
+                'with_comments' => false,
                 'table_mapping' => [],
             ],
         ],

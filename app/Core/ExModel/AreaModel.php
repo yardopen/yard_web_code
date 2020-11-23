@@ -15,4 +15,11 @@ use App\Model\YardArea;
 class AreaModel extends YardArea
 {
     protected $primaryKey = "area_id";
+
+    public function build()
+    {
+        return $this->hasMany(BuildModel::class, 'build_sn', 'build_sn');
+    }
+
+
 }

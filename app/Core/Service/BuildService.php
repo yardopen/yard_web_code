@@ -8,7 +8,6 @@
 
 namespace Core\Service;
 
-
 /**
  * Class BuildService
  * @package App\Core\Service
@@ -16,6 +15,42 @@ namespace Core\Service;
  */
 class BuildService extends BaseService
 {
+
+    /**
+     * @param array|string $where
+     * @param string[] $columns
+     * @param int $page
+     * @param int $perPage
+     * @return array
+     */
+    public function listBuild($where, $columns = ['*'], int $page = 1, int $perPage = 15)
+    {
+        $yard_sn = $this->session->get('yard_sn');
+        if (is_array($where)) {
+            $where['yard_sn'] = $yard_sn;
+            $where = array_filter($where);
+        } else {
+            $where .= " and yard_sn='{$yard_sn}'";
+        }
+
+        $res = $this->buildModel::query()->where($where)->select($columns)->with(['area' => function ($query) {
+            $query->select(['area_no', 'build_sn']);
+
+        }])->forPage($page, $perPage)->get()->all();
+        $data = [];
+        foreach ($res as $key => $val) {
+            $val['area_num'] = count($val['area']);
+            $max_no = max(array_column(json_decode($val['area'], true), "area_no")); //获取最大区域号
+            $sub_len = strlen($max_no) == 4 ? 2 : 1;
+            $val['floor_num'] = (int)substr($max_no, 0, $sub_len);//获取楼层高楼
+            unset($val['area']);
+            $data[] = $val;
+        }
+
+        return $data;
+
+    }
+
 
     /**
      * 根据条件查询

@@ -14,6 +14,7 @@ use App\Controller\BaseController;
 use App\Request\Build\CreateRequest;
 use App\Request\Build\DeleteRequest;
 use App\Request\Build\EditRequest;
+use App\Request\Build\ListRequest;
 
 
 /**
@@ -23,6 +24,15 @@ use App\Request\Build\EditRequest;
  */
 class BuildController extends BaseController
 {
+
+    public function list(ListRequest $listRequest)
+    {
+        $param = $listRequest->validated();
+        $res = $this->buildRepo->list($param);
+        return $res;
+      //  return $this->success($res['msg'], $res['data']);
+    }
+
     /**
      * 创建
      * @param CreateRequest $createRequest
