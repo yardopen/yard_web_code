@@ -63,9 +63,21 @@ class AreaModel extends YardArea
         2 => '复式',
     ];
 
+    /**
+     * @var string[]
+     */
     public $room_investment = [
         1 => '不可招商',
         2 => '可招商',
+    ];
+
+    /**
+     * @var string[]
+     */
+    public $room_rental_unit = [
+        1 => '元/㎡.月',
+        2 => '元/㎡.天',
+        3 => '元/月',
     ];
 
 
