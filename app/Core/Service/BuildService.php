@@ -29,14 +29,16 @@ class BuildService extends BaseService
         if (is_array($where)) {
             $where['yard_sn'] = $yard_sn;
             $where = array_filter($where);
+            $where['build_pid'] = 0;
         } else {
-            $where .= " and yard_sn='{$yard_sn}'";
+            $where .= " and  , build_pid=0 and yard_sn='{$yard_sn}'";
         }
 
         $res = $this->buildModel::query()->where($where)->select($columns)->with(['area' => function ($query) {
             $query->select(['area_no', 'build_sn']);
 
-        }])->forPage($page, $perPage)->get()->all();
+        }])->forPage($page, $perPage)->orderBy('sort')->orderBy('build_name')
+            ->get()->all();
         $data = [];
         foreach ($res as $key => $val) {
             $val['area_num'] = count($val['area']);
@@ -49,6 +51,20 @@ class BuildService extends BaseService
 
         return $data;
 
+    }
+
+    /**
+     * 楼栋树
+     * @return array
+     */
+    public function treeBuild()
+    {
+        $yard_sn = $this->session->get('yard_sn');
+        $where = ["yard_sn" => $yard_sn, "build_pid" => 0];
+        $res = $this->buildModel::query()->where($where)->select(['build_sn', 'build_name'])
+            ->orderBy('sort')->orderBy('build_name')
+            ->get()->all();
+        return $res;
     }
 
 

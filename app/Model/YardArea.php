@@ -32,8 +32,7 @@ namespace App\Model;
  * @property \Carbon\Carbon $created_at 
  * @property \Carbon\Carbon $updated_at 
  * @property int $status 
- * @property string $remark 
- * @mixin \App_Model_YardArea
+ * @property string $remark
  */
 class YardArea extends BaseModel
 {

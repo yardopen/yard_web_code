@@ -55,6 +55,8 @@ class ListRequest extends AbstractRequest
     {
         return [
             'build_name' => '楼栋名称',
+            'page' => '页码',
+            'perPage' => '第页记录数',
         ];
     }
 }
