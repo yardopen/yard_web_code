@@ -47,7 +47,6 @@ class AreaRepository extends BaseRepository
             'floor_no' => $floor_no,
         ];
         $chk_floor_res = $this->floorService->first($floor_chk);
-        $floor_sn = '';
         if ($chk_floor_res) {
             $floor_sn = $chk_floor_res['floor_sn'];
         } else {
@@ -67,5 +66,28 @@ class AreaRepository extends BaseRepository
             return $this->code(200, "房间创建成功", ['area_sn' => $area_res['area_sn']]);
         }
         return $this->code(400, "房间创建失败");
+    }
+
+    public function editArea(array $param)
+    {
+
+    }
+
+    public function deleteArea(array $param)
+    {
+        $where = ["area_sn" => $param['area_sn']];
+        $chk_res = $this->areaService->first($where);
+        if (!$chk_res) {
+            return $this->code(400, "房间不存在");
+        }
+        //2:查询房间否在租赁当中
+
+        //3:执行删除操作
+        $del_res = $this->areaService->deleteArea($param['area_sn']);
+        if ($del_res) {
+            return $this->code(200, "房间删除成功");
+        }
+        return $this->code(400, "房间删除失败");
+
     }
 }

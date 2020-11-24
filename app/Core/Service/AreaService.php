@@ -143,4 +143,32 @@ class AreaService extends BaseService
         }
         return false;
     }
+
+    public function editArea(string $area_sn, string $area_name = '', float $area_size = 0, int $area_type = 0,
+                             int $is_investment = 1,
+                             int $orientations = 0, float $rental_price = 0, int $rental_unit = 1, int $renovation_type = 0, int $layout_type = 1,
+                             int $bedroom_num = 0, int $wc_room_num = 1, int $drawing_room_num = 1, array $introduce_imgs = [], string $layout_img = '',
+                             string $introduce_video = '')
+    {
+
+    }
+
+
+    /**
+     * 删除房间
+     * @param string $area_sn
+     * @return bool
+     */
+    public function deleteArea(string $area_sn)
+    {
+        $where = [
+            'yard_sn' => $this->session->get('yard_sn'),
+            'area_sn' => $area_sn
+        ];
+        $res = $this->areaModel::query()->where($where)->delete();
+        if ($res) {
+            return true;
+        }
+        return false;
+    }
 }
