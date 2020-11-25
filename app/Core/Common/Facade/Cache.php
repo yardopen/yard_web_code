@@ -20,6 +20,9 @@ use Hyperf\Utils\ApplicationContext;
  */
 class Cache
 {
+    /**
+     * @return RedisCache|mixed
+     */
     public static function get()
     {
         return ApplicationContext::getContainer()->get(RedisCache::class);
