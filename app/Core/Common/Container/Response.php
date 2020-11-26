@@ -44,11 +44,11 @@ class Response
     /**
      * success
      * 成功返回请求结果
-     * @param string $msg
      * @param array $data
+     * @param string $msg
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function success(string $msg = '', array $data = [])
+    public function success(array $data = [], string $msg = '')
     {
         $msg = $msg ?? StatusCode::getMessage(StatusCode::SUCCESS);;
         $out_data = [
