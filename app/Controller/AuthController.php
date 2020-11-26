@@ -11,6 +11,7 @@ namespace App\Controller;
 
 
 use App\Request\Auth\LoginRequest;
+use Hyperf\HttpServer\Contract\RequestInterface;
 
 /**
  * Class AuthController
@@ -19,7 +20,12 @@ use App\Request\Auth\LoginRequest;
  */
 class AuthController extends BaseController
 {
-
+    /**
+     * 用户登录
+     * @param LoginRequest $request
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Exception
+     */
     public function login(LoginRequest $request)
     {
         $param = $request->validated();
@@ -28,5 +34,21 @@ class AuthController extends BaseController
             return $this->success($res['msg'], $res['data']);
         }
         return $this->error($res['msg']);
+    }
+
+    /**
+     * 退出登录
+     * @param RequestInterface $request
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function logout(RequestInterface $request)
+    {
+        $token = $request->getHeaderLine('token');
+        $res = $this->authaccountRepository->logout($token);
+        if ($res['code'] == 200) {
+            return $this->success($res['msg'], $res['data']);
+        }
+        return $this->error($res['msg']);
+
     }
 }

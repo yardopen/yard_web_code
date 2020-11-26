@@ -51,4 +51,18 @@ class AuthaccountService extends BaseService
         return false;
 
     }
+
+    /**
+     * 退出登录
+     * @param string $token
+     * @return bool
+     */
+    public function logout(string $token)
+    {
+        $res = $this->cache->del($token);
+        if ($res > 0) {
+            return true;
+        }
+        return false;
+    }
 }

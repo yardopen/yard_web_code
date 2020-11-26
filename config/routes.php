@@ -23,6 +23,8 @@ Router::addRoute(['GET', 'POST'], '/auth/login', 'App\Controller\AuthController@
 
 //权限访问
 Router::addGroup('/', function () {
+    //退出登录
+    Router::addRoute(['GET', 'POST'], 'auth/logout', 'App\Controller\AuthController@logout');
 
     //楼栋
     Router::addGroup('build/', function () {

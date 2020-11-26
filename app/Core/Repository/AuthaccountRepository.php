@@ -42,4 +42,18 @@ class AuthaccountRepository extends BaseRepository
 
     }
 
+    /**
+     * 退出
+     * @param string $token
+     * @return array
+     */
+    public function logout(string $token)
+    {
+        $res = $this->authaccountService->logout($token);
+        if ($res) {
+            return $this->code(200, "成功退出");
+        }
+        return $this->code(400, "退出失败");
+    }
+
 }

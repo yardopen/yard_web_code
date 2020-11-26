@@ -23,6 +23,6 @@ class IndexController extends BaseController
             'method' => $method,
             'message' => "Hello {$user}.",
         ];
-        return $this->success($return);
+        return $this->success('index', $return);
     }
 }
