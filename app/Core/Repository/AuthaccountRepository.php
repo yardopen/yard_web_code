@@ -17,13 +17,23 @@ namespace Core\Repository;
 class AuthaccountRepository extends BaseRepository
 {
 
+    /**
+     * 用户登录
+     * @param array $param
+     * @return array
+     * @throws \Exception
+     */
     public function login(array $param)
     {
-        $chk = $this->authaccountService->first($param, ['yard_sn', "account_sn", "username", "account_name", "sex", "tel"]);
+        $param['password'] = encryptPassword($param['password']);
+        $chk = $this->authaccountService->first($param, ['yard_sn', "account_sn", "username", 'password', "account_name", "sex", "tel"]);
         if (!$chk) {
             return $this->code(400, "用户名或密码错误");
         }
-
+        if ($param['password'] <> $chk['password']) {
+            return $this->code(400, "用户名或密码错误");
+        }
+        unset($chk['password']);
         $session_res = $this->authaccountService->prodToken($chk['yard_sn'], $chk);
         if (!$session_res) {
             return $this->code(400, "会话存储失败");

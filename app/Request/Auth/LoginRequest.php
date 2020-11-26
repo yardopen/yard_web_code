@@ -20,7 +20,7 @@ class LoginRequest extends AbstractRequest
     public function rules(): array
     {
         return [
-            "username" => "required|string|between:1,20",
+            "username" => "required|alpha_dash|between:1,20",
             "password" => "required|string|between:1,20",
         ];
     }

@@ -359,7 +359,10 @@ if (!function_exists('encryptPassword')) {
      */
     function encryptPassword($password)
     {
-        return password_hash($password, PASSWORD_DEFAULT);
+        $len = intval(strlen($password) / 2);
+        $pass01 = substr(md5(substr($password, 0, $len)), 16);
+        $pass02 = substr(md5(substr($password, $len)), 16);
+        return $pass01 . $pass02;
     }
 }
 
@@ -367,20 +370,16 @@ if (!function_exists('checkPassword')) {
     /**
      * checkPassword
      * 检测密码
-     * User：YM
-     * Date：2020/1/10
-     * Time：下午12:48
      * @param $value
      * @param $hashedValue
      * @return bool
      */
     function checkPassword($value, $hashedValue)
     {
-        if (strlen($hashedValue) === 0) {
+        if (strlen($hashedValue) != 32) {
             return false;
         }
-
-        return password_verify($value, $hashedValue);
+        return encryptPassword($value)==$hashedValue;
     }
 }
 
