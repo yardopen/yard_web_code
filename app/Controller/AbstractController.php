@@ -42,7 +42,7 @@ abstract class AbstractController
      */
     protected function success($msg = '', $data = [])
     {
-        return $this->response->success($msg, $data);
+        return $this->response->success($data, $msg);
     }
 
     /**
