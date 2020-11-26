@@ -24,12 +24,24 @@ use App\Request\Build\ListRequest;
 class BuildController extends BaseController
 {
 
+    public function tree()
+    {
+        $res = $this->buildRepo->tree();
+        if ($res['code'] == 200) {
+            return $this->success($res['msg'], $res['data']);
+        }
+        return $this->error($res['msg']);
+
+    }
+
     public function list(ListRequest $listRequest)
     {
         $param = $listRequest->validated();
         $res = $this->buildRepo->list($param);
-        return $res;
-      //  return $this->success($res['msg'], $res['data']);
+        if ($res['code'] == 200) {
+            return $this->success($res['msg'], $res['data']);
+        }
+        return $this->error($res['msg']);
     }
 
     /**
