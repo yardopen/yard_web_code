@@ -39,13 +39,14 @@ class AreaRepository extends BaseRepository
      * @param array $param
      * @return array
      */
-    public function addArea(array $param)
+    public function createArea(array $param)
     {
         $floor_no = (int)substr(sprintf("%04d", $param['area_no']), 0, 2);
         $floor_chk = [
             'build_sn' => $param['build_sn'],
             'floor_no' => $floor_no,
         ];
+        //1:检查楼层是否存在，若不存在则创建
         $chk_floor_res = $this->floorService->first($floor_chk);
         if ($chk_floor_res) {
             $floor_sn = $chk_floor_res['floor_sn'];
@@ -55,6 +56,11 @@ class AreaRepository extends BaseRepository
                 return $this->code(400, "楼层创建失败");
             }
             $floor_sn = $add_floor_res['floor_sn'];
+        }
+        //2:检查房屋是否存在
+        $chk_area_res = $this->areaService->first(['area_sn' => $param['area_no']], ['area_no']);
+        if ($chk_area_res) {
+            return $this->code(400, "房间已存在");
         }
 
         //2:创建房间
@@ -70,9 +76,22 @@ class AreaRepository extends BaseRepository
 
     public function editArea(array $param)
     {
+        //1:检查房屋是否存在
+        $chk_area_res = $this->areaService->first(['area_sn' => $param['area_no']], ['area_no']);
+        if (!$chk_area_res) {
+            return $this->code(400, "房间不存在");
+        }
+
+        //2:检查房屋是否在租赁中
+
+        //3:修改房屋
 
     }
 
+    /**
+     * @param array $param
+     * @return array
+     */
     public function deleteArea(array $param)
     {
         $where = ["area_sn" => $param['area_sn']];

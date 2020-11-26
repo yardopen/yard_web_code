@@ -22,7 +22,7 @@ Router::get('/favicon.ico', function () {
 //楼栋
 Router::addGroup('/house/', function () {
     Router::addGroup('build/', function () {
-        Router::addRoute(['GET', 'POST', 'HEAD'], 'list', 'App\Controller\House\BuildController@list');
+        Router::addRoute(['GET', 'POST', 'HEAD'], 'list', 'App\Controller\BuildController@list');
     });
 
 });

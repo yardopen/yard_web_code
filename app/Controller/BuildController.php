@@ -7,10 +7,9 @@
  **/
 declare (strict_types=1);
 
-namespace App\Controller\House;
+namespace App\Controller;
 
 
-use App\Controller\BaseController;
 use App\Request\Build\CreateRequest;
 use App\Request\Build\DeleteRequest;
 use App\Request\Build\EditRequest;
