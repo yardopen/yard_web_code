@@ -83,6 +83,25 @@ class AreaService extends BaseService
         return false;
     }
 
+
+    public function listArea($where, $columns = ['*'], int $page = 1, int $perPage = 15)
+    {
+        $yard_sn = $this->session->get('yard_sn');
+        if (is_array($where)) {
+            $where['yard_sn'] = $yard_sn;
+            $where = array_filter($where);
+        } else {
+            $where .= " and yard_sn='{$yard_sn}'";
+        }
+
+
+        $res = $this->areaModel::query()->where($where)->select($columns)->with(['area' => function ($query) {
+            $query->select(['area_no', 'build_sn']);
+
+        }])->forPage($page, $perPage)->orderBy('sort')->orderBy('area_no')
+            ->get()->all();
+    }
+
     /**
      * 创建房间
      * @param string $build_sn
@@ -144,12 +163,72 @@ class AreaService extends BaseService
         return false;
     }
 
-    public function editArea(string $area_sn, string $area_name = '', float $area_size = 0, int $area_type = 0,
+
+    /**
+     * 修改房间
+     * @param bool $is_rental 是否在租赁中
+     * @param string $area_sn 房间编号
+     * @param string $area_name 房间别名
+     * @param float|int $area_size 房间尺寸
+     * @param int $area_type 户型 1：普通   2复式
+     * @param int $is_investment 是否可招商 1可以   2不可以
+     * @param int $orientations 朝向 0未知  1南 2东南  3东  4西南  5北 6西
+     * @param float|int $rental_price 装修 0未知  1简装   2精装   3毛坏
+     * @param int $rental_unit 租赁单位  1：元/㎡.月  2:元/㎡.天  3：元/月
+     * @param int $renovation_type 装修 0未知  1简装   2精装   3毛坏
+     * @param int $layout_type 户型 1：普通   2复式
+     * @param int $bedroom_num
+     * @param int $wc_room_num
+     * @param int $drawing_room_num
+     * @param array $introduce_imgs
+     * @param array $layout_img
+     * @param array $introduce_video
+     * @return bool
+     */
+    public function editArea(bool $is_rental, string $area_sn, string $area_name = '', float $area_size = 0, int $area_type = 0,
                              int $is_investment = 1,
                              int $orientations = 0, float $rental_price = 0, int $rental_unit = 1, int $renovation_type = 0, int $layout_type = 1,
-                             int $bedroom_num = 0, int $wc_room_num = 1, int $drawing_room_num = 1, array $introduce_imgs = [], string $layout_img = '',
-                             string $introduce_video = '')
+                             int $bedroom_num = 0, int $wc_room_num = 1, int $drawing_room_num = 1, array $introduce_imgs = [], array $layout_img = [],
+                             array $introduce_video = [])
     {
+        $where = [
+            "area_sn" => $area_sn,
+            'yard_sn' => $this->session->get('yard_sn'),
+        ];
+
+        $update_db = [
+            'area_name' => $area_name,
+            'area_size' => $area_size,
+            'orientations' => $orientations,
+            'rental_price' => $rental_price,
+            'rental_unit' => $rental_unit,
+            'renovation_type' => $renovation_type,
+            'layout_type' => $layout_type,
+
+            //图片、视频采用json存储
+            'introduce_imgs' => $introduce_imgs,
+            'layout_img' => $layout_img,
+            'introduce_video' => $introduce_video,
+        ];
+
+        if ($layout_type == 1) { //普通房
+            $update_db['bedroom_num'] = $bedroom_num;
+            $update_db['wc_room_num'] = $wc_room_num;
+            $update_db['drawing_room_num'] = $drawing_room_num;
+        }
+
+
+        //2:检查房屋是否在租赁中
+        if (!$is_rental) { //非租赁中
+            $update_db['area_type'] = $area_type;
+            $update_db['is_investment'] = $is_investment;
+        }
+
+        $res = $this->areaModel::query()->where($where)->update($update_db);
+        if ($res) {
+            return true;
+        }
+        return false;
 
     }
 

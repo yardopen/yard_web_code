@@ -9,7 +9,6 @@ declare (strict_types=1);
 
 namespace Core\ExModel;
 
-
 use App\Model\YardArea;
 
 class AreaModel extends YardArea
@@ -81,9 +80,22 @@ class AreaModel extends YardArea
     ];
 
 
+    /**
+     * 房间与楼栋的关系
+     * @return \Hyperf\Database\Model\Relations\HasMany
+     */
     public function build()
     {
         return $this->hasMany(BuildModel::class, 'build_sn', 'build_sn');
+    }
+
+    /**
+     * 房间与租约的关系
+     * @return \Hyperf\Database\Model\Relations\HasMany
+     */
+    public function lease()
+    {
+        return $this->hasMany(LeaseModel::class, 'lease_sn', 'lease_sn');
     }
 
 
