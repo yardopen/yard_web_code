@@ -15,4 +15,5 @@ use App\Model\RentalLease;
 class LeaseModel extends RentalLease
 {
     protected $primaryKey = "lease_id";
+
 }

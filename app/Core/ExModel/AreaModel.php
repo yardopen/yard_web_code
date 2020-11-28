@@ -44,7 +44,7 @@ class AreaModel extends YardArea
      * 房间类型
      * @var string[]
      */
-    public $room_area_type = [
+    public $area_type_name = [
         0 => '未知',
         1 => '办公间',
         2 => '商铺',
@@ -57,7 +57,7 @@ class AreaModel extends YardArea
      * 房间户型
      * @var string[]
      */
-    public $room_layout = [
+    public $layout_type_name = [
         1 => '普通',
         2 => '复式',
     ];
@@ -73,11 +73,41 @@ class AreaModel extends YardArea
     /**
      * @var string[]
      */
-    public $room_rental_unit = [
+    public $rental_unit_name = [
         1 => '元/㎡.月',
         2 => '元/㎡.天',
         3 => '元/月',
     ];
+
+
+    /**
+     * 房间类型(户型)
+     * @return string
+     */
+    public function getFullRoomTypeAttribute()
+    {
+        if ($this->area_type <> 3) {
+            return $this->area_type_name[$this->area_type];
+        }
+
+        if ($this->layout_type == 2) {
+            return $this->area_type_name[3] . "($this->layout_type_name[2])";
+        }
+
+        return "{$this->layout_type_name[3]}({$this->bedroom_num}房{$this->drawing_room_num}厅{$this->wc_room_num}卫)";
+    }
+
+    /**
+     * 租赁单价全称
+     * @return string
+     */
+    public function getRentalPriceNameAttribute()
+    {
+        if ($this->is_investment == 2) {
+            return '不可招商';
+        }
+        return "{$this->rental_price}{$this->rental_unit_name[$this->rental_unit]}";
+    }
 
 
     /**

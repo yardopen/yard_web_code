@@ -39,7 +39,7 @@ class AreaService extends BaseService
      */
     public function roomAreaType()
     {
-        return $this->areaModel->room_area_type;
+        return $this->areaModel->area_type_name;
     }
 
     /**
@@ -48,7 +48,7 @@ class AreaService extends BaseService
      */
     public function roomLayout()
     {
-        return $this->areaModel->room_layout;
+        return $this->areaModel->layout_type_name;
     }
 
     /**
@@ -57,7 +57,7 @@ class AreaService extends BaseService
      */
     public function roomRentalUnit()
     {
-        return $this->areaModel->room_rental_unit;
+        return $this->areaModel->rental_unit_name;
     }
 
 
