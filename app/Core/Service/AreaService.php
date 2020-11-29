@@ -97,7 +97,7 @@ class AreaService extends BaseService
 
         $res = $this->areaModel::query()->where($where)->select($columns)
             ->with(['lease' => function ($query) {
-                $query->select(['area_no', 'build_sn', 'start_date', 'end_date']);
+                $query->select(['lease_sn', 'area_no', 'build_sn', 'start_date', 'end_date']);
 
             }])->with(['build' => function ($bq) {
                 $bq->select(['build_name', 'build_sn']);

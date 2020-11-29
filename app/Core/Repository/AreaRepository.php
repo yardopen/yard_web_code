@@ -35,9 +35,15 @@ class AreaRepository extends BaseRepository
     }
 
 
-    public function listArea()
+    public function listArea(array $param)
     {
         // $columns=["area_no","area_name","area_size",'area_type','rental_price','rental_unit','orientations','renovation_type','layout_type',''];
+
+        $where = [
+
+        ];
+        $res = $this->areaService->listArea($where, ['*'], $param['page'], $param['per_page']);
+        return $this->code(200, "房间列表", $res);
     }
 
     /**

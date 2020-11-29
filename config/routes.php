@@ -35,4 +35,12 @@ Router::addGroup('/', function () {
         Router::addRoute(['GET', 'POST'], 'tree', 'App\Controller\BuildController@tree');
     });
 
+    //房间
+    Router::addGroup('room/', function () {
+        Router::addRoute(['GET', 'POST'], 'list', 'App\Controller\AreaController@list');
+        Router::addRoute(['GET', 'POST'], 'create', 'App\Controller\AreaController@create');
+        Router::addRoute(['GET', 'POST'], 'edit', 'App\Controller\AreaController@edit');
+        Router::addRoute(['GET', 'POST'], 'delete', 'App\Controller\AreaController@delete');
+    });
+
 }, ['middleware' => [AuthMiddleware::class]]);

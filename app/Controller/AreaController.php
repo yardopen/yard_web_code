@@ -14,6 +14,7 @@ namespace App\Controller;
 use App\Request\Area\CreateRequest;
 use App\Request\Area\DeleteRequest;
 use App\Request\Area\EditRequest;
+use App\Request\Area\ListRequest;
 
 /**
  * Class AreaController
@@ -22,8 +23,14 @@ use App\Request\Area\EditRequest;
  */
 class AreaController extends BaseController
 {
-    public function list()
+    public function list(ListRequest $listRequest)
     {
+        $param = $listRequest->validated();
+        $res = $this->areaRepo->listArea($param);
+        if ($res['code'] == 200) {
+            return $this->success($res['msg'], $res['data']);
+        }
+        return $this->error($res['msg']);
 
     }
 
