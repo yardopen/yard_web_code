@@ -53,7 +53,7 @@ class BaseService
             return $this->container;
         } elseif (strtolower(substr($key, -5)) == 'cache') {
             return Cache::get();
-        } elseif (strtolower(substr($key, -5)) == 'session') {
+        } elseif (strtolower(substr($key, -7)) == 'session') {
             return make(Session::class);
         } elseif (in_array($key, $this->businessContainerKey)) {
             return $this->getBusinessContainerInstance($key);
