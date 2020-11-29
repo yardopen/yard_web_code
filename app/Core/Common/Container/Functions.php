@@ -394,7 +394,7 @@ if (!function_exists('getUserUniqueId')) {
     function getUserUniqueId()
     {
         // 前缀3位
-        $prefix = config('app_uid_prefix');
+        $prefix = config('app_uid_prefix','openyard');
         $prefix = substr($prefix, 0, 3);
         //随机字符串14位
         $rand = substr(str_replace(['/', '+', '='], '', base64_encode(random_bytes(14))), 0, 14);

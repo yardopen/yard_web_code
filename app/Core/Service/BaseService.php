@@ -9,6 +9,7 @@
  **/
 declare (strict_types=1);
 
+namespace Core\Service;
 
 use App\Constants\StatusCode;
 use Core\Common\Container\Session;

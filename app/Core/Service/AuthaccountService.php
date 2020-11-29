@@ -10,6 +10,8 @@ declare (strict_types=1);
 namespace Core\Service;
 
 
+use Core\Common\Facade\Cache;
+
 /**
  * Class AuthaccountService
  * @package Core\Service
@@ -44,7 +46,7 @@ class AuthaccountService extends BaseService
     {
         $token = getUserUniqueId();
         $data['yard_sn'] = $yard_sn;
-        $store = $this->cache->set($token, json_encode($data));
+        $store = $this->cache->set($token, json_encode($data), Cache::maxIdelTime());
         if ($store) {
             return $token;
         }

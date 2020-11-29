@@ -29,10 +29,10 @@ Router::addGroup('/', function () {
     //楼栋
     Router::addGroup('build/', function () {
         Router::addRoute(['GET', 'POST'], 'list', 'App\Controller\BuildController@list');
-        Router::addRoute(['GET', 'POST'], 'list', 'App\Controller\BuildController@create');
-        Router::addRoute(['GET', 'POST'], 'list', 'App\Controller\BuildController@edit');
-        Router::addRoute(['GET', 'POST'], 'list', 'App\Controller\BuildController@delete');
-        Router::addRoute(['GET', 'POST'], 'list', 'App\Controller\BuildController@tree');
+        Router::addRoute(['GET', 'POST'], 'create', 'App\Controller\BuildController@create');
+        Router::addRoute(['GET', 'POST'], 'edit', 'App\Controller\BuildController@edit');
+        Router::addRoute(['GET', 'POST'], 'delete', 'App\Controller\BuildController@delete');
+        Router::addRoute(['GET', 'POST'], 'tree', 'App\Controller\BuildController@tree');
     });
 
 }, ['middleware' => [AuthMiddleware::class]]);

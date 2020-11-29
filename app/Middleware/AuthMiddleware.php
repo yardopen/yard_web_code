@@ -62,6 +62,7 @@ class AuthMiddleware implements MiddlewareInterface
             return false;
         }
         try {
+            $cache->expire($token, Cache::maxIdelTime());
             $token_arr = json_decode($token_json, true);
             if (is_array($token_arr) && !empty($token_arr['yard_sn'])) {
                 return true;

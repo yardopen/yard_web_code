@@ -31,8 +31,8 @@ class LoginRequest extends AbstractRequest
     protected function validationData(): array
     {
         return [
-            "username" => $this->input("build_name", ''),
-            "password" => $this->input("build_area", ''),
+            "username" => $this->input("username", ''),
+            "password" => $this->input("password", ''),
 
         ];
     }

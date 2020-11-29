@@ -27,4 +27,13 @@ class Cache
     {
         return ApplicationContext::getContainer()->get(RedisCache::class);
     }
+
+    /**
+     *获取redis配置的过期时长
+     * @return int
+     */
+    public static function maxIdelTime()
+    {
+        return (int)env('REDIS_MAX_IDLE_TIME', 600);
+    }
 }
