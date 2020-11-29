@@ -95,11 +95,16 @@ class AreaService extends BaseService
         }
 
 
-        $res = $this->areaModel::query()->where($where)->select($columns)->with(['area' => function ($query) {
-            $query->select(['area_no', 'build_sn']);
+        $res = $this->areaModel::query()->where($where)->select($columns)
+            ->with(['lease' => function ($query) {
+                $query->select(['area_no', 'build_sn', 'start_date', 'end_date']);
 
-        }])->forPage($page, $perPage)->orderBy('sort')->orderBy('area_no')
+            }])->with(['build' => function ($bq) {
+                $bq->select(['build_name', 'build_sn']);
+
+            }])->forPage($page, $perPage)->orderBy('sort')->orderBy('area_no')
             ->get()->all();
+       return $res;
     }
 
     /**

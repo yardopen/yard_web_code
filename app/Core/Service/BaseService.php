@@ -1,7 +1,13 @@
 <?php
 
 
-namespace Core\Service;
+/**
+ * YardOpen
+ * Created by 大宇  Mars
+ * Create Date 2020/11/25-20:53
+ * Team Name HornIOT
+ **/
+declare (strict_types=1);
 
 
 use App\Constants\StatusCode;

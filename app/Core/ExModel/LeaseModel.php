@@ -16,4 +16,12 @@ class LeaseModel extends RentalLease
 {
     protected $primaryKey = "lease_id";
 
+    protected $casts = [
+        'start_date' => 'datetime:Y-m-d',
+        'end_date' => 'datetime:Y-m-d',
+        'area_json' => 'array',
+        'tenant_json' => 'array'
+    ];
+
+
 }

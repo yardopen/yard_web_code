@@ -39,7 +39,6 @@ return [
         'commands' => [
             'gen:model' => [
                 'path' => 'app/Model',
-                'force_casts' => true,
                 'inheritance' => 'BaseModel',
                 'uses' => '',
                 'refresh_fillable' => true,

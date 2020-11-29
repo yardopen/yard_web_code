@@ -31,7 +31,7 @@ class BuildService extends BaseService
             $where = array_filter($where);
             $where['build_pid'] = 0;
         } else {
-            $where .= " and  , build_pid=0 and yard_sn='{$yard_sn}'";
+            $where .= " and   build_pid=0 and yard_sn='{$yard_sn}'";
         }
 
         $res = $this->buildModel::query()->where($where)->select($columns)->with(['area' => function ($query) {
