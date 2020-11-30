@@ -97,14 +97,48 @@ class AreaService extends BaseService
 
         $res = $this->areaModel::query()->where($where)->select($columns)
             ->with(['lease' => function ($query) {
-                $query->select(['lease_sn', 'area_no', 'build_sn', 'start_date', 'end_date']);
+                $query->select(['lease_sn', 'tenant_name', 'lease_no', 'start_date', 'end_date']);
 
             }])->with(['build' => function ($bq) {
                 $bq->select(['build_name', 'build_sn']);
 
             }])->forPage($page, $perPage)->orderBy('sort')->orderBy('area_no')
-            ->get()->all();
-       return $res;
+            ->get();
+        $res_arr = $res->all();
+        foreach ($res as $key => $val) {
+
+            //房间全名称
+            $res_arr[$key]["full_room_name"] = "{$val->build->build_name}-{$val->area_no}";
+            if (empty($val->lease_sn)) {
+                $res_arr[$key]["full_room_name"] .= $val->area_name ? "($val->area_name)" : "";
+            } else {
+                $res_arr[$key]["full_room_name"] .= $val->lease->tenant_name ? "({$val->lease->tenant_name})" : "";
+            }
+
+            //房屋类型(户型)
+            $res_arr[$key]["full_room_type"] = $val->full_room_type;
+            $res_arr[$key]["rental_price_name"] = $val->rental_price_name;
+
+            $res_arr[$key]["introduce_imgs"] = $val->introduce_imgs ?? [];
+            $res_arr[$key]["layout_img"] = $val->layout_img ?? [];
+            $res_arr[$key]["introduce_video"] = $val->introduce_video ?? [];
+
+            //房间当前状态
+            $res_arr[$key]["room_status"] = '自住';
+            if (empty($val->lease_sn)) {
+                $res_arr[$key]["room_status"] = $val->is_investment == 1 ? '招商中' : "自住";
+            } elseif (time() > strtotime((string)$val->lease->end_date)) {
+                $res_arr[$key]["room_status"] = "已招商(已逾期)";
+            } else {
+                $res_arr[$key]["room_status"] = "已招商({$val->lease->start_date}至{$val->lease->end_date})";
+            }
+
+            //
+
+            unset($res_arr[$key]["build"], $res_arr[$key]["lease"]);
+
+        }
+        return $res_arr;
     }
 
     /**
@@ -129,11 +163,12 @@ class AreaService extends BaseService
      * @param array $introduce_video
      * @return false|mixed
      */
-    public function createArea(string $build_sn, string $floor_sn, string $area_no, string $area_name = '', float $area_size = 0, int $area_type = 0,
-                               int $is_investment = 1,
-                               int $orientations = 0, float $rental_price = 0, int $rental_unit = 1, int $renovation_type = 0, int $layout_type = 1,
-                               int $bedroom_num = 0, int $wc_room_num = 1, int $drawing_room_num = 1, array $introduce_imgs = [], array $layout_img = [],
-                               array $introduce_video = [])
+    public
+    function createArea(string $build_sn, string $floor_sn, string $area_no, string $area_name = '', float $area_size = 0, int $area_type = 0,
+                        int $is_investment = 1,
+                        int $orientations = 0, float $rental_price = 0, int $rental_unit = 1, int $renovation_type = 0, int $layout_type = 1,
+                        int $bedroom_num = 0, int $wc_room_num = 1, int $drawing_room_num = 1, array $introduce_imgs = [], array $layout_img = [],
+                        array $introduce_video = [])
     {
         $insert_db = [
             "area_sn" => snowFlakeId(),
@@ -190,11 +225,12 @@ class AreaService extends BaseService
      * @param array $introduce_video
      * @return bool
      */
-    public function editArea(bool $is_rental, string $area_sn, string $area_name = '', float $area_size = 0, int $area_type = 0,
-                             int $is_investment = 1,
-                             int $orientations = 0, float $rental_price = 0, int $rental_unit = 1, int $renovation_type = 0, int $layout_type = 1,
-                             int $bedroom_num = 0, int $wc_room_num = 1, int $drawing_room_num = 1, array $introduce_imgs = [], array $layout_img = [],
-                             array $introduce_video = [])
+    public
+    function editArea(bool $is_rental, string $area_sn, string $area_name = '', float $area_size = 0, int $area_type = 0,
+                      int $is_investment = 1,
+                      int $orientations = 0, float $rental_price = 0, int $rental_unit = 1, int $renovation_type = 0, int $layout_type = 1,
+                      int $bedroom_num = 0, int $wc_room_num = 1, int $drawing_room_num = 1, array $introduce_imgs = [], array $layout_img = [],
+                      array $introduce_video = [])
     {
         $where = [
             "area_sn" => $area_sn,
@@ -243,7 +279,8 @@ class AreaService extends BaseService
      * @param string $area_sn
      * @return bool
      */
-    public function deleteArea(string $area_sn)
+    public
+    function deleteArea(string $area_sn)
     {
         $where = [
             'yard_sn' => $this->session->get('yard_sn'),

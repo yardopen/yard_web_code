@@ -41,7 +41,9 @@ class AreaRepository extends BaseRepository
      */
     public function listArea(array $param)
     {
-        $columns = ['area_sn', 'area_no', 'area_name', 'area_size', 'area_type', 'is_investment', 'orientations', 'rental_price', 'rental_unit', 'renovation_type', 'layout_type', 'bedroom_num', 'wc_room_num', 'drawing_room_num', 'introduce_imgs', 'layout_img', 'introduce_video', 'build_sn', 'lease_sn'];
+        $columns = ['area_sn', 'area_no', 'area_name', 'area_size', 'area_type', 'is_investment', 'orientations', 'rental_price',
+            'rental_unit', 'renovation_type', 'layout_type', 'bedroom_num', 'wc_room_num', 'drawing_room_num', 'introduce_imgs',
+            'layout_img', 'introduce_video', 'build_sn', 'lease_sn'];
 
         $where = array_filter([
             'area_sn' => $param['area_sn'],

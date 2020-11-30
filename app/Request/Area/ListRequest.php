@@ -42,7 +42,7 @@ class ListRequest extends AbstractRequest
             "room_orientations" => $this->input("room_orientations", 0), //朝向
             "area_type" => $this->input("area_type", 0), //类型
             "room_status" => $this->input("room_status", 0), //状态
-            "er_page" => $this->input("per_page", 15),
+            "per_page" => $this->input("per_page", 15),
             "page" => $this->input("page", 1),
         ];
     }

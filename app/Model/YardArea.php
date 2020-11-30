@@ -34,6 +34,7 @@ namespace App\Model;
  * @property \Carbon\Carbon $updated_at 修改时间
  * @property int $status 状态 1正常
  * @property string $remark 备注
+ * @property int $sort  排序
  */
 class YardArea extends BaseModel
 {
@@ -48,11 +49,11 @@ class YardArea extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['area_id', 'area_sn', 'area_no', 'area_name', 'area_size', 'area_type', 'is_investment', 'orientations', 'rental_price', 'rental_unit', 'renovation_type', 'layout_type', 'bedroom_num', 'wc_room_num', 'drawing_room_num', 'introduce_imgs', 'layout_img', 'introduce_video', 'yard_sn', 'build_sn', 'floor_sn', 'lease_sn', 'creater_id', 'creater_name', 'modifyer_id', 'modifyer_name', 'created_at', 'updated_at', 'status', 'remark'];
+    protected $fillable = ['area_id', 'area_sn', 'area_no', 'area_name', 'area_size', 'area_type', 'is_investment', 'orientations', 'rental_price', 'rental_unit', 'renovation_type', 'layout_type', 'bedroom_num', 'wc_room_num', 'drawing_room_num', 'introduce_imgs', 'layout_img', 'introduce_video', 'yard_sn', 'build_sn', 'floor_sn', 'lease_sn', 'creater_id', 'creater_name', 'modifyer_id', 'modifyer_name', 'created_at', 'updated_at', 'status', 'remark', 'sort'];
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $casts = ['area_id' => 'integer', 'area_size' => 'float', 'area_type' => 'integer', 'is_investment' => 'integer', 'orientations' => 'integer', 'rental_price' => 'float', 'rental_unit' => 'integer', 'renovation_type' => 'integer', 'layout_type' => 'integer', 'bedroom_num' => 'integer', 'wc_room_num' => 'integer', 'drawing_room_num' => 'integer', 'creater_id' => 'integer', 'modifyer_id' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime', 'status' => 'integer'];
+    protected $casts = ['area_id' => 'integer', 'area_size' => 'float', 'area_type' => 'integer', 'is_investment' => 'integer', 'orientations' => 'integer', 'rental_price' => 'float', 'rental_unit' => 'integer', 'renovation_type' => 'integer', 'layout_type' => 'integer', 'bedroom_num' => 'integer', 'wc_room_num' => 'integer', 'drawing_room_num' => 'integer', 'creater_id' => 'integer', 'modifyer_id' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime', 'status' => 'integer', 'sort' => 'integer'];
 }

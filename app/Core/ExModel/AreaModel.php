@@ -15,6 +15,19 @@ class AreaModel extends YardArea
 {
     protected $primaryKey = "area_id";
 
+    protected $casts = [
+        'introduce_imgs' => 'array',
+        'layout_img' => 'array',
+        'introduce_video' => 'array',
+    ];
+
+    //定义默认值
+    protected $attributes = [
+        'introduce_imgs' => [],
+        'layout_img' => [],
+        'introduce_video' => [],
+    ];
+
     /**
      * 房间朝向
      * @var string[]
@@ -91,10 +104,10 @@ class AreaModel extends YardArea
         }
 
         if ($this->layout_type == 2) {
-            return $this->area_type_name[3] . "($this->layout_type_name[2])";
+            return $this->area_type_name[1] . "($this->layout_type_name[2])";
         }
 
-        return "{$this->layout_type_name[3]}({$this->bedroom_num}房{$this->drawing_room_num}厅{$this->wc_room_num}卫)";
+        return "{$this->layout_type_name[1]}({$this->bedroom_num}房{$this->drawing_room_num}厅{$this->wc_room_num}卫)";
     }
 
     /**
@@ -104,7 +117,7 @@ class AreaModel extends YardArea
     public function getRentalPriceNameAttribute()
     {
         if ($this->is_investment == 2) {
-            return '不可招商';
+            return '0.00';
         }
         return "{$this->rental_price}{$this->rental_unit_name[$this->rental_unit]}";
     }
@@ -112,20 +125,20 @@ class AreaModel extends YardArea
 
     /**
      * 房间与楼栋的关系
-     * @return \Hyperf\Database\Model\Relations\HasMany
+     * @return \Hyperf\Database\Model\Relations\BelongsTo
      */
     public function build()
     {
-        return $this->hasMany(BuildModel::class, 'build_sn', 'build_sn');
+        return $this->belongsTo(BuildModel::class, 'build_sn', 'build_sn');
     }
 
     /**
      * 房间与租约的关系
-     * @return \Hyperf\Database\Model\Relations\HasMany
+     * @return \Hyperf\Database\Model\Relations\BelongsTo
      */
     public function lease()
     {
-        return $this->hasMany(LeaseModel::class, 'lease_sn', 'lease_sn');
+        return $this->belongsTo(LeaseModel::class, 'lease_sn', 'lease_sn');
     }
 
 
