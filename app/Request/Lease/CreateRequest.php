@@ -1,0 +1,65 @@
+<?php
+/**
+ * YardOpen
+ * Created by 大宇  Mars
+ * Create Date 2020/11/21-20:11
+ * Team Name HornIOT
+ **/
+declare (strict_types=1);
+
+namespace App\Request\Lease;
+
+
+use App\Request\AbstractRequest;
+
+class CreateRequest extends AbstractRequest
+{
+    /**
+     * Get the validation rules that apply to the request.
+     */
+    public function rules(): array
+    {
+        return [
+            "tenant_sn" => "required|digits:20",
+            "build_name" => "required|string|between:1,20",
+            "elevator_num" => "integer|between:0,99",
+            "build_area" => "numeric|between:0,100000",
+        ];
+    }
+
+    /**
+     * Get data to be validated from the request.
+     */
+    protected function validationData(): array
+    {
+        return [
+            "build_sn" => $this->input("build_sn", ''),
+            "build_name" => $this->input("build_name", ''),
+            "build_area" => $this->input("build_area", 0),
+            "elevator_num" => $this->input("elevator_num", 0),
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     */
+    public function messages(): array
+    {
+        return [
+
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     */
+    public function attributes(): array
+    {
+        return [
+            'build_sn' => '楼栋编号',
+            'build_name' => '楼栋名称',
+            'build_area' => '楼栋建筑面积',
+            'elevator_num' => '楼栋电梯数量',
+        ];
+    }
+}
