@@ -43,4 +43,18 @@ Router::addGroup('/', function () {
         Router::addRoute(['GET', 'POST'], 'delete', 'App\Controller\AreaController@delete');
     });
 
+    //租户
+    Router::addGroup('tenant/', function () {
+        Router::addRoute(['GET', 'POST'], 'list', 'App\Controller\TenantController@list');
+        Router::addRoute(['GET', 'POST'], 'edit', 'App\Controller\TenantController@edit');
+    });
+
+    //租约
+    Router::addGroup('lease/', function () {
+        Router::addRoute(['GET', 'POST'], 'list', 'App\Controller\LeaseController@list');
+        Router::addRoute(['GET', 'POST'], 'create', 'App\Controller\LeaseController@create');
+        Router::addRoute(['GET', 'POST'], 'edit', 'App\Controller\LeaseController@edit');
+        Router::addRoute(['GET', 'POST'], 'delete', 'App\Controller\LeaseController@delete');
+    });
+
 }, ['middleware' => [AuthMiddleware::class]]);
