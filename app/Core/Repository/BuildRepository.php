@@ -26,7 +26,7 @@ class BuildRepository extends BaseRepository
     public function list(array $param)
     {
         $columns = ['build_sn', 'build_name', 'build_size', 'elevator_num',];
-        $res = $this->buildService->listBuild(['build_name' => $param['build_name']], $columns, $param['page'], $param['perPage']);
+        $res = $this->buildService->listBuild(['build_name' => $param['build_name']], $columns, $param['page'], $param['per_page']);
         return $this->code(200, "楼栋列表", $res);
     }
 

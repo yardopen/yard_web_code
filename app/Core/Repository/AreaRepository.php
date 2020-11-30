@@ -34,15 +34,28 @@ class AreaRepository extends BaseRepository
         return $this->code(200, "楼栋列表", $res);
     }
 
-
+    /**
+     * 房间列表
+     * @param array $param
+     * @return array
+     */
     public function listArea(array $param)
     {
-        // $columns=["area_no","area_name","area_size",'area_type','rental_price','rental_unit','orientations','renovation_type','layout_type',''];
+        $columns = ['area_sn', 'area_no', 'area_name', 'area_size', 'area_type', 'is_investment', 'orientations', 'rental_price', 'rental_unit', 'renovation_type', 'layout_type', 'bedroom_num', 'wc_room_num', 'drawing_room_num', 'introduce_imgs', 'layout_img', 'introduce_video', 'build_sn', 'lease_sn'];
 
-        $where = [
-
-        ];
-        $res = $this->areaService->listArea($where, ['*'], $param['page'], $param['per_page']);
+        $where = array_filter([
+            'area_sn' => $param['area_sn'],
+            'build_sn' => $param['build_sn'],
+            'orientations' => $param['room_orientations'],
+            'area_type' => $param['area_type'],
+        ], function ($val) {  //保留0
+            if ($val === 0 || $val != false) {
+                return true;
+            } else {
+                false;
+            }
+        });
+        $res = $this->areaService->listArea($where, $columns, $param['page'], $param['per_page']);
         return $this->code(200, "房间列表", $res);
     }
 
@@ -74,6 +87,11 @@ class AreaRepository extends BaseRepository
         return $this->code(400, "房间创建失败");
     }
 
+    /**
+     * 编辑房间
+     * @param array $param
+     * @return array
+     */
     public function editArea(array $param)
     {
         //1:检查房屋是否存在

@@ -23,6 +23,11 @@ use App\Request\Area\ListRequest;
  */
 class AreaController extends BaseController
 {
+    /**
+     * 房间列表
+     * @param ListRequest $listRequest
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function list(ListRequest $listRequest)
     {
         $param = $listRequest->validated();
@@ -34,6 +39,11 @@ class AreaController extends BaseController
 
     }
 
+    /**
+     * 创建房间
+     * @param CreateRequest $createRequest
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function create(CreateRequest $createRequest)
     {
         $param = $createRequest->validated();
@@ -44,7 +54,11 @@ class AreaController extends BaseController
         return $this->error($res['msg']);
     }
 
-
+    /**
+     * 编辑房间
+     * @param EditRequest $editRequest
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function edit(EditRequest $editRequest)
     {
         $param = $editRequest->validated();
@@ -55,6 +69,11 @@ class AreaController extends BaseController
         return $this->error($res['msg']);
     }
 
+    /**
+     * 删除房间
+     * @param DeleteRequest $deleteRequest
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function delete(DeleteRequest $deleteRequest)
     {
         $param = $deleteRequest->validated();

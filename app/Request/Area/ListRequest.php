@@ -20,9 +20,13 @@ class ListRequest extends AbstractRequest
     public function rules(): array
     {
         return [
-            "area_sn" => "digits_between:1,20",//楼栋编号
-            "page" => "digits_between:1,4",
-            "per_page" => "digits_between:1,3",
+            "area_sn" => "digits_between:1,20",
+            "build_sn" => "digits_between:1,20",
+            "room_orientations" => "between:0,6",
+            "area_type" => "between:0,5",
+            "room_status" => "between:0,5",
+            "page" => "between:0,100000",
+            "per_page" => "between:1,100",
 
         ];
     }
@@ -33,8 +37,12 @@ class ListRequest extends AbstractRequest
     protected function validationData(): array
     {
         return [
-            "area_sn" => $this->input("area_sn", ''),
-            "per_page" => $this->input("per_page", 15),
+            "area_sn" => $this->input("area_sn", ''),//房间编号
+            "build_sn" => $this->input("build_sn", ''),//楼栋编号
+            "room_orientations" => $this->input("room_orientations", 0), //朝向
+            "area_type" => $this->input("area_type", 0), //类型
+            "room_status" => $this->input("room_status", 0), //状态
+            "er_page" => $this->input("per_page", 15),
             "page" => $this->input("page", 1),
         ];
     }

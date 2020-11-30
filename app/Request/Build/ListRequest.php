@@ -22,7 +22,7 @@ class ListRequest extends AbstractRequest
         return [
             "build_name" => "string|between:0,20",
             "page" => "integer|min:1",
-            "perPage" => "integer|between:1,100",
+            "per_page" => "integer|between:1,100",
         ];
     }
 
@@ -34,7 +34,7 @@ class ListRequest extends AbstractRequest
         return [
             "build_name" => $this->input("build_name", ''),
             "page" => $this->input("page", 1),
-            "perPage" => $this->input("perPage", 15),
+            "per_page" => $this->input("per_page", 15),
         ];
     }
 
