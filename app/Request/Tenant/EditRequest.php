@@ -20,10 +20,12 @@ class EditRequest extends AbstractRequest
     public function rules(): array
     {
         return [
-            "tenant_sn" => "required|digits:20",
-            "build_name" => "required|string|between:1,20",
-            "elevator_num" => "integer|between:0,99",
-            "build_area" => "numeric|between:0,100000",
+            "tenant_sn" => "required|digits_between:1,20",
+            "tenant_type" => "required|integer|between:1,2",
+            "tenant_name" => "required|string|between:1,50",
+            "certificate_num" => "required|digits_between:1,30",
+            "contact_name" => "required|string|between:1,20",
+            "contact_tel" => "required|digits_between:1,20",
         ];
     }
 
@@ -33,10 +35,12 @@ class EditRequest extends AbstractRequest
     protected function validationData(): array
     {
         return [
-            "build_sn" => $this->input("build_sn", ''),
-            "build_name" => $this->input("build_name", ''),
-            "build_area" => $this->input("build_area", 0),
-            "elevator_num" => $this->input("elevator_num", 0),
+            "tenant_sn" => $this->input("tenant_sn", ''),
+            "tenant_name" => $this->input("tenant_name", ''),
+            "tenant_type" => $this->input("tenant_type", 0),
+            "certificate_num" => $this->input("certificate_num", ''),
+            "contact_name" => $this->input("certificate_num", ''),
+            "contact_tel" => $this->input("certificate_num", ''),
         ];
     }
 
@@ -56,10 +60,12 @@ class EditRequest extends AbstractRequest
     public function attributes(): array
     {
         return [
-            'build_sn' => '楼栋编号',
-            'build_name' => '楼栋名称',
-            'build_area' => '楼栋建筑面积',
-            'elevator_num' => '楼栋电梯数量',
+            'tenant_sn' => '租户编号',
+            'tenant_name' => '租户名称',
+            'tenant_type' => '租户类型',
+            'certificate_num' => '证件号',
+            'contact_name' => '联系人',
+            'contact_tel' => '联系电话',
         ];
     }
 }

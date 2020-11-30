@@ -9,6 +9,7 @@ declare (strict_types=1);
 
 namespace App\Controller;
 
+use App\Request\Tenant\EditRequest;
 use App\Request\Tenant\ListRequest;
 
 /**
@@ -33,8 +34,19 @@ class TenantController extends BaseController
         return $this->error($res['msg']);
     }
 
-    public function edit()
-    {
 
+    /**
+     * 租户编辑
+     * @param EditRequest $editRequest
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function edit(EditRequest $editRequest)
+    {
+        $param = $editRequest->validated();
+        $res = $this->tenantRepo->editTenant($param);
+        if ($res['code'] == 200) {
+            return $this->success($res['msg'], $res['data']);
+        }
+        return $this->error($res['msg']);
     }
 }
