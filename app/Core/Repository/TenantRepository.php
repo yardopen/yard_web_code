@@ -23,10 +23,14 @@ class TenantRepository extends BaseRepository
      */
     public function listTenant(array $param)
     {
-        $where = [];
+        $where = array_filter([
+            'tenant_name' => $param['tenant_name'],
+            'tenant_type' => $param['tenant_type'],
+            'certificate_num' => $param['certificate_num'],
+        ]);
         $cloumn = ['tenant_sn', 'tenant_type', 'tenant_name', 'certificate_num', 'contact_name', 'contact_tel'];
-        $res = $this->tenantService->listTenant($where, $cloumn, $param['page'], $param['perPage']);
-        return $this->code(200, "租户信息修改成功", $res);
+        $res = $this->tenantService->listTenant($where, $cloumn, $param['page'], $param['per_page']);
+        return $this->code(200, "租户信息列表", $res);
     }
 
     /**
@@ -52,6 +56,7 @@ class TenantRepository extends BaseRepository
             return $this->code(400, "租户信息修改失败");
         }
         //3:修改租户关联的正常的租约记录
+
 
         return $this->code(200, "租户信息修改成功");
     }

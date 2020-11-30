@@ -61,7 +61,7 @@ class TenantService extends BaseService
         $res = $this->tenantModel::query()->where($where)->select($columns)->with(['lease' => function ($query) {
             $query->select(['lease_no', 'start_date', 'end_date', 'area_json', 'tenant_sn',]);
 
-        }])->forPage($page, $perPage)->orderBy('sort')->orderBy('build_name')
+        }])->forPage($page, $perPage)->orderBy('sort')->orderBy('tenant_id','desc')
             ->get()->all();
         $data = [];
         foreach ($res as $key => $val) {
