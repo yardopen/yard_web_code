@@ -103,7 +103,7 @@ class BuildService extends BaseService
             "build_sn" => snowFlakeId(),
             'build_name' => $build_name,
             'yard_sn' => $this->session->get('yard_sn'),
-            'build_area' => $build_area,
+            'build_size' => $build_area,
             'elevator_num' => $elevator_num,
         ];
         $res = $this->buildModel->insert($insert_db);
@@ -131,7 +131,7 @@ class BuildService extends BaseService
         ];
         $update_db = [
             'build_name' => $build_name,
-            'build_area' => $build_area,
+            'build_size' => $build_area,
             'elevator_num' => $elevator_num,
         ];
         $res = $this->buildModel::query()->where($update_where)->update($update_db);

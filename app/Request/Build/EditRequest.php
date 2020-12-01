@@ -23,7 +23,7 @@ class EditRequest extends AbstractRequest
             "build_sn" => "required|digits:20",
             "build_name" => "required|string|between:1,20",
             "elevator_num" => "integer|between:0,99",
-            "build_area" => "numeric|between:0,100000",
+            "build_size" => "numeric|between:0,100000",
         ];
     }
 
@@ -35,7 +35,7 @@ class EditRequest extends AbstractRequest
         return [
             "build_sn" => $this->input("build_sn", ''),
             "build_name" => $this->input("build_name", ''),
-            "build_area" => $this->input("build_area", 0),
+            "build_size" => $this->input("build_area", 0),
             "elevator_num" => $this->input("elevator_num", 0),
         ];
     }
@@ -58,7 +58,7 @@ class EditRequest extends AbstractRequest
         return [
             'build_sn' => '楼栋编号',
             'build_name' => '楼栋名称',
-            'build_area' => '楼栋建筑面积',
+            'build_size' => '楼栋建筑面积',
             'elevator_num' => '楼栋电梯数量',
         ];
     }

@@ -51,7 +51,7 @@ class BuildRepository extends BaseRepository
         if ($chk) {
             return $this->code(400, "楼栋已存在");
         }
-        $res = $this->buildService->createBuild($param['build_name'], $param['build_area'], $param['elevator_num']);
+        $res = $this->buildService->createBuild($param['build_name'], $param['build_size'], $param['elevator_num']);
         if (is_bool($res)) {
 
             return $this->code(400, "楼栋创建失败");
@@ -77,7 +77,7 @@ class BuildRepository extends BaseRepository
             return $this->code(400, "楼栋名称已存在");
         }
 
-        $res = $this->buildService->editBuild($param['build_sn'], $param['build_name'], $param['build_area'], $param['elevator_num']);
+        $res = $this->buildService->editBuild($param['build_sn'], $param['build_name'], $param['build_size'], $param['elevator_num']);
         if ($res) {
             return $this->code(200, "楼栋修改成功", ["build_sn" => $param['build_sn']]);
 

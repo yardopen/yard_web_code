@@ -52,7 +52,6 @@ class Response
     {
         $msg = $msg ?? StatusCode::getMessage(StatusCode::SUCCESS);;
         $out_data = [
-            'qid' => $this->request->getHeaderLine('qid'),
             'code' => StatusCode::SUCCESS,
             'msg' => $msg,
             'data' => $data

@@ -38,7 +38,7 @@ class AuthaccountRepository extends BaseRepository
         if (!$session_res) {
             return $this->code(400, "会话存储失败");
         }
-        return $this->code(200, "登录成功", ['token' => $session_res]);
+        return $this->code(200, "登录成功", ['token' => $session_res,"account_name"=>$chk['account_name']]);
 
     }
 
