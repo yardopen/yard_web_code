@@ -80,7 +80,6 @@ class Response
     {
         $msg = $msg ?? StatusCode::getMessage($code);;
         $data = [
-            'qid' => $this->request->getHeaderLine('qid'),
             'code' => $code,
             'msg' => $msg,
         ];
