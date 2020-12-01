@@ -32,14 +32,6 @@ class BaseService
      */
     protected $container;
 
-    /**
-     * Created by PhpStorm.
-     * 可以实现自动注入的业务容器
-     * User：YM
-     * Date：2020/1/12
-     * Time：上午8:18
-     */
-    protected $businessContainerKey = ['auth', 'adminPermission'];
 
     /**
      * __get
@@ -55,8 +47,6 @@ class BaseService
             return Cache::get();
         } elseif (strtolower(substr($key, -7)) == 'session') {
             return make(Session::class);
-        } elseif (in_array($key, $this->businessContainerKey)) {
-            return $this->getBusinessContainerInstance($key);
         } elseif (substr($key, -5) == 'Model') {
             // $key = strstr($key, 'BaseModel', true);
             return $this->getModelInstance($key);
@@ -68,24 +58,6 @@ class BaseService
     }
 
 
-    /**
-     * getBusinessContainerInstance
-     * 获取业务容器实例
-     * @param $key
-     * @return mixed
-     */
-    private function getBusinessContainerInstance($key)
-    {
-        $key = ucfirst($key);
-        $fileName = BASE_PATH . "/app/Core/Common/Container/{$key}.php";
-        $className = "Core\\Common\\Container\\{$key}";
-
-        if (file_exists($fileName)) {
-            return $this->container->get($className);
-        } else {
-            throw new \RuntimeException("通用容器{$key}不存在，文件不存在！", StatusCode::ERR_SERVER);
-        }
-    }
 
     /**
      * getModelInstance
