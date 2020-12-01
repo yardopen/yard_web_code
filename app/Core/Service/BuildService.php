@@ -93,17 +93,17 @@ class BuildService extends BaseService
     /**
      * 创建楼栋,创建成功返
      * @param string $build_name
-     * @param float|int $build_area
+     * @param float|int $build_size
      * @param int $elevator_num
      * @return false|string
      */
-    public function createBuild(string $build_name, float $build_area = 0, int $elevator_num = 0)
+    public function createBuild(string $build_name, float $build_size = 0, int $elevator_num = 0)
     {
         $insert_db = [
             "build_sn" => snowFlakeId(),
             'build_name' => $build_name,
             'yard_sn' => $this->session->get('yard_sn'),
-            'build_size' => $build_area,
+            'build_size' => $build_size,
             'elevator_num' => $elevator_num,
         ];
         $res = $this->buildModel->insert($insert_db);
@@ -118,11 +118,11 @@ class BuildService extends BaseService
      * 通过楼栋编号修改楼栋信息
      * @param string $build_sn
      * @param string $build_name
-     * @param float|int $build_area
+     * @param float|int $build_size
      * @param int $elevator_num
      * @return bool
      */
-    public function editBuild(string $build_sn, string $build_name, float $build_area = 0, int $elevator_num = 0)
+    public function editBuild(string $build_sn, string $build_name, float $build_size = 0, int $elevator_num = 0)
     {
 
         $update_where = [
@@ -131,7 +131,7 @@ class BuildService extends BaseService
         ];
         $update_db = [
             'build_name' => $build_name,
-            'build_size' => $build_area,
+            'build_size' => $build_size,
             'elevator_num' => $elevator_num,
         ];
         $res = $this->buildModel::query()->where($update_where)->update($update_db);

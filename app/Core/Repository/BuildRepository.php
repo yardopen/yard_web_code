@@ -71,7 +71,6 @@ class BuildRepository extends BaseRepository
         if (empty($chk)) {
             return $this->code(400, "楼栋不存在");
         }
-
         $chk2 = $this->buildService->first("build_name='{$param['build_name']}' and build_sn<>'{$param['build_sn']}'");
         if ($chk2) {
             return $this->code(400, "楼栋名称已存在");

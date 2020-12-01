@@ -20,7 +20,7 @@ class DeleteRequest extends AbstractRequest
     public function rules(): array
     {
         return [
-            "build_sn" => "required|digits:20",
+            "build_sn" => "required|digits:18",
         ];
     }
 

@@ -33,7 +33,7 @@ class CreateRequest extends AbstractRequest
     {
         return [
             "build_name" => $this->input("build_name", ''),
-            "build_size" => $this->input("build_area", 0),
+            "build_size" => $this->input("build_size", 0),
             "elevator_num" => $this->input("elevator_num", 0),
         ];
     }

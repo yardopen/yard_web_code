@@ -67,7 +67,7 @@ class BuildController extends BaseController
     public function edit(EditRequest $editRequest)
     {
         $param = $editRequest->validated();
-        $res = $this->buildRepo->create($param);
+        $res = $this->buildRepo->edit($param);
         if ($res['code'] == 200) {
             return $this->success($res['msg'], $res['data']);
         }

@@ -20,7 +20,7 @@ class EditRequest extends AbstractRequest
     public function rules(): array
     {
         return [
-            "build_sn" => "required|digits:20",
+            "build_sn" => "required|digits:18",
             "build_name" => "required|string|between:1,20",
             "elevator_num" => "integer|between:0,99",
             "build_size" => "numeric|between:0,100000",
@@ -35,7 +35,7 @@ class EditRequest extends AbstractRequest
         return [
             "build_sn" => $this->input("build_sn", ''),
             "build_name" => $this->input("build_name", ''),
-            "build_size" => $this->input("build_area", 0),
+            "build_size" => $this->input("build_size", 0),
             "elevator_num" => $this->input("elevator_num", 0),
         ];
     }
