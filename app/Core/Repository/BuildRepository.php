@@ -91,7 +91,7 @@ class BuildRepository extends BaseRepository
      */
     public function delete(array $param)
     {
-        //第一步：检查楼栋是
+        //第一步：检查楼栋是否存在
         $chk = $this->buildService->first(['build_sn' => $param['build_sn']]);
         if (empty($chk)) {
             return $this->code(400, "楼栋不存在");

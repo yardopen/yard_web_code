@@ -82,7 +82,7 @@ class BuildController extends BaseController
     public function delete(DeleteRequest $deleteRequest)
     {
         $param = $deleteRequest->validated();
-        $res = $this->buildRepo->create($param);
+        $res = $this->buildRepo->delete($param);
         if ($res['code'] == 200) {
             return $this->success($res['msg'], $res['data']);
         }
