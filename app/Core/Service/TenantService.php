@@ -65,7 +65,7 @@ class TenantService extends BaseService
             ->get()->all();
         $data = [];
         foreach ($res as $key => $val) {
-            if ($val['lease_no']) {
+            if ($val['tenant_sn']) {
                 $lease = $val['lease'];
                 unset($val['lease']);
                 $data[] = array_merge($val, $lease);
