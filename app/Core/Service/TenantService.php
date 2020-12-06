@@ -65,11 +65,21 @@ class TenantService extends BaseService
             ->get()->all();
         $data = [];
         foreach ($res as $key => $val) {
-            if ($val['tenant_sn']) {
-                $lease = $val['lease'];
+            $lease = [
+                'area_json' => '',
+                'lease_no' => '',
+                'lease_duration' => '',
+            ];
+            if ($val['lease']['lease_no']) {
+                $lease_data = $val['lease'];
                 unset($val['lease']);
-                $data[] = array_merge($val, $lease);
+                $lease = [
+                    'area_json' => is_array($lease_data['area_json']) ? implode(",", $lease_data['area_json']) : '',
+                    'lease_no' => $lease_data['lease_no'],
+                    'lease_duration' => $lease_data['start_date'] . "——" . $lease_data['end_date'],
+                ];
             }
+            $data[] = array_merge($val, $lease);
         }
         return $data;
     }
