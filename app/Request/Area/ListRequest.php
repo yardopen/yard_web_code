@@ -20,7 +20,7 @@ class ListRequest extends AbstractRequest
     public function rules(): array
     {
         return [
-            "area_sn" => "digits_between:1,20",
+            "area_no" => "digits_between:3,4",
             "build_sn" => "digits_between:1,20",
             "room_orientations" => "between:0,6",
             "area_type" => "between:0,5",
@@ -37,7 +37,7 @@ class ListRequest extends AbstractRequest
     protected function validationData(): array
     {
         return [
-            "area_sn" => $this->input("area_sn", ''),//房间编号
+            "area_no" => $this->input("area_no", ''),//房间编号
             "build_sn" => $this->input("build_sn", ''),//楼栋编号
             "room_orientations" => $this->input("room_orientations", 0), //朝向
             "area_type" => $this->input("area_type", 0), //类型

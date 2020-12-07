@@ -135,7 +135,7 @@ class AreaService extends BaseService
 
             //
 
-            unset($res_arr[$key]["build"], $res_arr[$key]["lease"]);
+            unset($res_arr[$key]["build"], $res_arr[$key]["lease"], $res_arr[$key]["build_sn"], $res_arr[$key]["lease_sn"]);
 
         }
         return $res_arr;
@@ -163,12 +163,11 @@ class AreaService extends BaseService
      * @param array $introduce_video
      * @return false|mixed
      */
-    public
-    function createArea(string $build_sn, string $floor_sn, string $area_no, string $area_name = '', float $area_size = 0, int $area_type = 0,
-                        int $is_investment = 1,
-                        int $orientations = 0, float $rental_price = 0, int $rental_unit = 1, int $renovation_type = 0, int $layout_type = 1,
-                        int $bedroom_num = 0, int $wc_room_num = 1, int $drawing_room_num = 1, array $introduce_imgs = [], array $layout_img = [],
-                        array $introduce_video = [])
+    public function createArea(string $build_sn, string $floor_sn, string $area_no, string $area_name = '', float $area_size = 0, int $area_type = 0,
+                               int $is_investment = 1,
+                               int $orientations = 0, float $rental_price = 0, int $rental_unit = 1, int $renovation_type = 0, int $layout_type = 1,
+                               int $bedroom_num = 0, int $wc_room_num = 1, int $drawing_room_num = 1, array $introduce_imgs = [], array $layout_img = [],
+                               array $introduce_video = [])
     {
         $insert_db = [
             "area_sn" => snowFlakeId(),

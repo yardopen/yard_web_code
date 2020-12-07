@@ -33,7 +33,7 @@ class CreateRequest extends AbstractRequest
             "layout_type" => "required|integer|between:1,2",//户型 1：普通   2复式
             "bedroom_num" => "integer|between:0,9", //房
             "wc_room_num" => "integer|between:0,9", //卫
-            "drawing_room_num" => "required|integer|between:1,9", //厅
+            "drawing_room_num" => "required|integer|between:0,9", //厅
             "introduce_imgs" => "array", //房间图片
             "layout_img" => "array", //平面图
             "introduce_video" => "array", //房间视频
@@ -59,7 +59,7 @@ class CreateRequest extends AbstractRequest
             "layout_type" => $this->input("layout_type", 1),
             "bedroom_num" => $this->input("bedroom_num", 0),
             "wc_room_num" => $this->input("wc_room_num", 0),
-            "drawing_room_num" => $this->input("drawing_room_num", 1),
+            "drawing_room_num" => $this->input("drawing_room_num", 0),
             "introduce_imgs" => $this->input("introduce_imgs", []),
             "layout_img" => $this->input("layout_img", []),
             "introduce_video" => $this->input("introduce_video", []),
