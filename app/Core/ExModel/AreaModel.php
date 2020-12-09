@@ -15,18 +15,20 @@ class AreaModel extends YardArea
 {
     protected $primaryKey = "area_id";
 
+
+    //定义默认值
+    protected $attributes = [
+        'introduce_imgs' => '[]',
+        'layout_img' => '[]',
+        'introduce_video' => '[]',
+    ];
+
     protected $casts = [
         'introduce_imgs' => 'array',
         'layout_img' => 'array',
         'introduce_video' => 'array',
     ];
 
-    //定义默认值
-    protected $attributes = [
-        'introduce_imgs' => [],
-        'layout_img' => [],
-        'introduce_video' => [],
-    ];
 
     /**
      * 房间朝向

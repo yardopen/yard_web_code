@@ -12,9 +12,9 @@ namespace App\Model;
  * @property int $sex 性别  0未知  1男  2女
  * @property string $tel 电话号码
  * @property string $yard_sn 园区sn
- * @property int $creater_id 创建人ID
+ * @property string $creater_sn 创建人sn
  * @property string $creater_name 创建人名称
- * @property int $modifyer_id 修改人ID
+ * @property string $modifyer_sn 修改人sn
  * @property string $modifyer_name 修改人名称
  * @property \Carbon\Carbon $created_at 创建时间
  * @property \Carbon\Carbon $updated_at 修改时间
@@ -35,7 +35,7 @@ class AuthAccount extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['account_id', 'account_sn', 'username', 'password', 'account_name', 'sex', 'tel', 'yard_sn', 'creater_id', 'creater_name', 'modifyer_id', 'modifyer_name', 'created_at', 'updated_at', 'status', 'remark', 'sort'];
+    protected $fillable = ['account_id', 'account_sn', 'username', 'password', 'account_name', 'sex', 'tel', 'yard_sn', 'creater_sn', 'creater_name', 'modifyer_sn', 'modifyer_name', 'created_at', 'updated_at', 'status', 'remark', 'sort'];
     /**
      * The attributes that should be cast to native types.
      *

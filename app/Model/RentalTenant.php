@@ -12,9 +12,9 @@ namespace App\Model;
  * @property string $contact_name 联系人姓名
  * @property string $contact_tel 联系人电话
  * @property string $yard_sn 园区sn
- * @property int $creater_id 创建人ID
+ * @property string $creater_sn 创建人sn
  * @property string $creater_name 创建人名称
- * @property int $modifyer_id 修改人ID
+ * @property string $modifyer_sn 修改人sn
  * @property string $modifyer_name 修改人名称
  * @property \Carbon\Carbon $created_at 创建时间
  * @property \Carbon\Carbon $updated_at 修改时间
@@ -35,7 +35,7 @@ class RentalTenant extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['tenant_id', 'tenant_sn', 'tenant_type', 'tenant_name', 'certificate_num', 'contact_name', 'contact_tel', 'yard_sn', 'creater_id', 'creater_name', 'modifyer_id', 'modifyer_name', 'created_at', 'updated_at', 'status', 'remark', 'sort'];
+    protected $fillable = ['tenant_id', 'tenant_sn', 'tenant_type', 'tenant_name', 'certificate_num', 'contact_name', 'contact_tel', 'yard_sn', 'creater_sn', 'creater_name', 'modifyer_sn', 'modifyer_name', 'created_at', 'updated_at', 'status', 'remark', 'sort'];
     /**
      * The attributes that should be cast to native types.
      *

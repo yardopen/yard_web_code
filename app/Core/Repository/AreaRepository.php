@@ -70,11 +70,11 @@ class AreaRepository extends BaseRepository
     {
 
         //1:检查房屋是否存在
-        $chk_area_res = $this->areaService->first(['area_sn' => $param['area_sn']], ['area_no']);
+        $chk_area_res = $this->areaService->first(['area_no' => $param['area_no'], 'build_sn' => $param['build_sn']], ['area_sn','area_no']);
         if ($chk_area_res) {
             return $this->code(400, "房间已存在");
         }
-
+      //  return $this->code(400, "房间已存在,还向下");
         //获取楼层sn
         $floor_sn = $this->getFloorSn($param['area_no'], $param['build_sn']);
 
@@ -84,7 +84,7 @@ class AreaRepository extends BaseRepository
             , $param['bedroom_num'], $param['wc_room_num'], $param['drawing_room_num'], $param['introduce_imgs'], $param['layout_img'], $param['introduce_video']
         );
         if ($area_res) {
-            return $this->code(200, "房间创建成功", ['area_sn' => $area_res['area_sn']]);
+            return $this->code(200, "房间创建成功", ['area_sn' => $area_res]);
         }
         return $this->code(400, "房间创建失败");
     }
@@ -97,7 +97,7 @@ class AreaRepository extends BaseRepository
     public function editArea(array $param)
     {
         //1:检查房屋是否存在
-        $chk_area_res = $this->areaService->first(['area_sn' => $param['area_sn']], ['lease_sn']);
+        $chk_area_res = $this->areaService->first(['area_sn' => $param['area_sn']], ['lease_sn', 'area_id']);
         if (!$chk_area_res) {
             return $this->code(400, "房间不存在");
         }
@@ -158,11 +158,11 @@ class AreaRepository extends BaseRepository
         if ($chk_floor_res) {
             $floor_sn = $chk_floor_res['floor_sn'];
         } else {
-            $add_floor_res = $this->floorService->createFloor($build_sn, $floor_no);
-            if (!$add_floor_res) {
+            $add_floor_sn = $this->floorService->createFloor($build_sn, $floor_no);
+            if (!$add_floor_sn) {
                 return $this->code(400, "楼层创建失败");
             }
-            $floor_sn = $add_floor_res['floor_sn'];
+            $floor_sn = $add_floor_sn;
         }
         return $floor_sn;
     }

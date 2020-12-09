@@ -5,21 +5,21 @@ namespace App\Model;
 
 /**
  * @property int $build_id 
- * @property string $build_sn 
- * @property string $build_name 
- * @property float $build_size 
- * @property int $elevator_num 
- * @property int $build_pid 
- * @property string $yard_sn 
- * @property int $creater_id 
- * @property string $creater_name 
- * @property int $modifyer_id 
- * @property string $modifyer_name 
- * @property \Carbon\Carbon $created_at 
- * @property \Carbon\Carbon $updated_at 
- * @property int $status 
- * @property string $remark 
- * @property int $sort 
+ * @property string $build_sn 楼栋编号
+ * @property string $build_name 楼栋名称
+ * @property float $build_size 建筑面积
+ * @property int $elevator_num 电梯数量
+ * @property int $build_pid 上级ID
+ * @property string $yard_sn 园区编号
+ * @property string $creater_sn 创建人sn
+ * @property string $creater_name 创建人名称
+ * @property string $modifyer_sn 修改人sn
+ * @property string $modifyer_name 修改人名称
+ * @property \Carbon\Carbon $created_at 创建时间
+ * @property \Carbon\Carbon $updated_at 修改时间
+ * @property int $status 状态 1正常
+ * @property string $remark 备注
+ * @property int $sort 排序
  */
 class YardBuild extends BaseModel
 {
@@ -34,7 +34,7 @@ class YardBuild extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['build_id', 'build_sn', 'build_name', 'build_size', 'elevator_num', 'build_pid', 'yard_sn', 'creater_id', 'creater_name', 'modifyer_id', 'modifyer_name', 'created_at', 'updated_at', 'status', 'remark', 'sort'];
+    protected $fillable = ['build_id', 'build_sn', 'build_name', 'build_size', 'elevator_num', 'build_pid', 'yard_sn', 'creater_sn', 'creater_name', 'modifyer_sn', 'modifyer_name', 'created_at', 'updated_at', 'status', 'remark', 'sort'];
     /**
      * The attributes that should be cast to native types.
      *

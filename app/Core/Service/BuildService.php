@@ -8,13 +8,20 @@
 
 namespace Core\Service;
 
+use Hyperf\Di\Annotation\Inject;
+use Core\ExModel\BuildModel;
+
 /**
  * Class BuildService
  * @package App\Core\Service
- * @property \Core\ExModel\BuildModel $buildModel
  */
 class BuildService extends BaseService
 {
+    /**
+     * @Inject()
+     * @var BuildModel
+     */
+    private $buildModel;
 
     /**
      * @param array|string $where

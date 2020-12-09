@@ -47,16 +47,15 @@ class BaseService
             return Cache::get();
         } elseif (strtolower(substr($key, -7)) == 'session') {
             return make(Session::class);
-        } elseif (substr($key, -5) == 'Model') {
+            // } elseif (substr($key, -5) == 'Model') {
             // $key = strstr($key, 'BaseModel', true);
-            return $this->getModelInstance($key);
+            // return $this->getModelInstance($key);
         } elseif (substr($key, -7) == 'Service') {
             return $this->getServiceInstance($key);
         } else {
             throw new \RuntimeException("服务/模型{$key}不存在，书写错误！", StatusCode::ERR_SERVER);
         }
     }
-
 
 
     /**
@@ -74,7 +73,8 @@ class BaseService
         if (file_exists($fileName)) {
             //model一般不要常驻内存
             //return $this->container->get($className);
-            return make($className);
+            return new $className;
+            //return make($className);
         } else {
             throw new \RuntimeException("模型{$key}不存在，文件不存在！", StatusCode::ERR_SERVER);
         }

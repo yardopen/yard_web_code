@@ -26,7 +26,7 @@ class AuthaccountRepository extends BaseRepository
     public function login(array $param)
     {
         $param['password'] = encryptPassword($param['password']);
-        $chk = $this->authaccountService->first($param, ['yard_sn', "account_sn", "username", 'password', "account_name", "sex", "tel"]);
+        $chk = $this->authaccountService->first($param, ['yard_sn', "account_sn",  "username", 'password', "account_name", "sex", "tel"]);
         if (!$chk) {
             return $this->code(400, "用户名或密码错误");
         }
@@ -38,7 +38,7 @@ class AuthaccountRepository extends BaseRepository
         if (!$session_res) {
             return $this->code(400, "会话存储失败");
         }
-        return $this->code(200, "登录成功", ['token' => $session_res,"account_name"=>$chk['account_name']]);
+        return $this->code(200, "登录成功", ['token' => $session_res, "account_name" => $chk['account_name']]);
 
     }
 

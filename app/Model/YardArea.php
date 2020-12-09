@@ -23,12 +23,12 @@ namespace App\Model;
  * @property string $layout_img 户型图
  * @property string $introduce_video 区域视频
  * @property string $yard_sn 园区编号
+ * @property string $creater_sn 创建人sn
  * @property string $build_sn 楼栋编号
  * @property string $floor_sn 楼层编号
  * @property string $lease_sn 租约sn
- * @property int $creater_id 创建人ID
  * @property string $creater_name 创建人名称
- * @property int $modifyer_id 修改人ID
+ * @property string $modifyer_sn 修改人sn
  * @property string $modifyer_name 修改人名称
  * @property \Carbon\Carbon $created_at 创建时间
  * @property \Carbon\Carbon $updated_at 修改时间
@@ -49,11 +49,5 @@ class YardArea extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['area_id', 'area_sn', 'area_no', 'area_name', 'area_size', 'area_type', 'is_investment', 'orientations', 'rental_price', 'rental_unit', 'renovation_type', 'layout_type', 'bedroom_num', 'wc_room_num', 'drawing_room_num', 'introduce_imgs', 'layout_img', 'introduce_video', 'yard_sn', 'build_sn', 'floor_sn', 'lease_sn', 'creater_id', 'creater_name', 'modifyer_id', 'modifyer_name', 'created_at', 'updated_at', 'status', 'remark', 'sort'];
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = ['area_id' => 'integer', 'area_size' => 'float', 'area_type' => 'integer', 'is_investment' => 'integer', 'orientations' => 'integer', 'rental_price' => 'float', 'rental_unit' => 'integer', 'renovation_type' => 'integer', 'layout_type' => 'integer', 'bedroom_num' => 'integer', 'wc_room_num' => 'integer', 'drawing_room_num' => 'integer', 'creater_id' => 'integer', 'modifyer_id' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime', 'status' => 'integer', 'sort' => 'integer'];
+    protected $fillable = ['area_id', 'area_sn', 'area_no', 'area_name', 'area_size', 'area_type', 'is_investment', 'orientations', 'rental_price', 'rental_unit', 'renovation_type', 'layout_type', 'bedroom_num', 'wc_room_num', 'drawing_room_num', 'introduce_imgs', 'layout_img', 'introduce_video', 'yard_sn', 'creater_sn', 'build_sn', 'floor_sn', 'lease_sn', 'creater_name', 'modifyer_sn', 'modifyer_name', 'created_at', 'updated_at', 'status', 'remark', 'sort'];
 }

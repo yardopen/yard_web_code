@@ -41,6 +41,7 @@ return [
                 'path' => 'app/Model',
                 'inheritance' => 'BaseModel',
                 'uses' => '',
+                'force_casts' => false,
                 'refresh_fillable' => true,
                 'with_comments' => true,
                 'table_mapping' => [],

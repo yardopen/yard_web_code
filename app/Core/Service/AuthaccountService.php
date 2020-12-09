@@ -11,15 +11,22 @@ namespace Core\Service;
 
 
 use Core\Common\Facade\Cache;
+use Core\ExModel\AuthaccountModel;
+use Hyperf\Di\Annotation\Inject;
 
 /**
  * Class AuthaccountService
  * @package Core\Service
- * @property \Core\ExModel\AuthaccountModel $authaccountModel
  * @property \Hyperf\Redis\Redis $cache
  */
 class AuthaccountService extends BaseService
 {
+    /**
+     * @Inject()
+     * @var AuthaccountModel
+     */
+    private $authaccountModel;
+
     /**
      * 根据条件查询
      * @param string[] $columns

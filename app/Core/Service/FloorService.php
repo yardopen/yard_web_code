@@ -9,13 +9,21 @@ declare (strict_types=1);
 
 namespace Core\Service;
 
+use Core\ExModel\FloorModel;
+use Hyperf\Di\Annotation\Inject;
+
 /**
  * Class FloorService
  * @package Core\Service
- * @property \Core\ExModel\FloorModel $floorModel
  */
 class FloorService extends BaseService
 {
+    /**
+     * @Inject()
+     * @var FloorModel
+     */
+    private $floorModel;
+
     /**
      * 根据条件查询
      * @param string[] $columns
@@ -47,16 +55,16 @@ class FloorService extends BaseService
      */
     public function createFloor(string $build_sn, int $floor_no, string $floor_img = '')
     {
-        $insert_db = [
-            "floor_sn" => snowFlakeId(),
-            'build_sn' => $build_sn,
-            'yard_sn' => $this->session->get('yard_sn'),
-            'floor_no' => $floor_no,
-            'floor_img' => $floor_img,
-        ];
-        $res = $this->floorModel->insert($insert_db);
+        $floor_sn = snowFlakeId();
+        $this->floorModel->floor_sn = $floor_sn;
+        $this->floorModel->build_sn = $build_sn;
+        $this->floorModel->yard_sn = $this->session->get('yard_sn');
+        $this->floorModel->floor_no = $floor_no;
+        $this->floorModel->floor_img = $floor_img;
+
+        $res = $this->floorModel->save();
         if ($res) {
-            return $insert_db['floor_sn'];
+            return $this->floorModel->floor_sn;
         }
         return false;
     }

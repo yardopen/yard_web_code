@@ -15,4 +15,5 @@ use App\Model\YardFloor;
 class FloorModel extends YardFloor
 {
     protected $primaryKey = "floor_id";
+
 }
