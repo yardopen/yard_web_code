@@ -55,10 +55,12 @@ abstract class BaseModel extends Model implements CacheableInterface
             $account_sn = $this->session->get('account_sn');
             if ($account_sn) {
                 $this->setAttribute('creater_sn', $account_sn);
+                $this->setAttribute('modifyer_sn', $account_sn);
             }
             $account_name = $this->session->get('account_name');
             if ($account_name) {
                 $this->setAttribute('creater_name', $account_name);
+                $this->setAttribute('modifyer_name', $account_name);
             }
 
             $yard_sn = $this->session->get('yard_sn');
@@ -81,7 +83,6 @@ abstract class BaseModel extends Model implements CacheableInterface
         if ($this->hook) {
             $account_sn = $this->session->get('account_sn');
             $account_name = $this->session->get('account_name');
-            // $attrs = $this->getAttributes();  && array_key_exists('modifyer_name', $attrs)
 
             if ($account_sn) {
                 $this->setAttribute('modifyer_sn', $account_sn);
