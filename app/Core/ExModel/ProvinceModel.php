@@ -16,4 +16,5 @@ use App\Model\MapProvince;
 class ProvinceModel extends MapProvince
 {
     protected $primaryKey = "province_id";
+    protected $hook = false;
 }

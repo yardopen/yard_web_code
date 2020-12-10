@@ -15,6 +15,7 @@ use App\Model\YardBuild;
 class BuildModel extends YardBuild
 {
     protected $primaryKey = "build_id";
+    protected $primarySn = 'build_sn';
 
     public function area()
     {

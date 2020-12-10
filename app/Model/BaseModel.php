@@ -33,6 +33,17 @@ abstract class BaseModel extends Model implements CacheableInterface
 
     public $timestamps = true;
     protected $dateFormat = 'U';
+    /**
+     * 是否启用勾子功能
+     * @var bool
+     */
+    protected $hook = true;
+    /**
+     * 每个表sn字段名
+     * @var string
+     */
+    protected $primarySn = '';
+
 
     /**
      * 创建钩子
@@ -40,18 +51,23 @@ abstract class BaseModel extends Model implements CacheableInterface
      */
     public function creating(Creating $event)
     {
-        $account_sn = $this->session->get('account_sn');
-        if ($account_sn) {
-            $this->setAttribute('creater_sn', $account_sn);
-        }
-        $account_name = $this->session->get('account_name');
-        if ($account_name) {
-            $this->setAttribute('creater_name', $account_name);
-        }
+        if ($this->hook) {
+            $account_sn = $this->session->get('account_sn');
+            if ($account_sn) {
+                $this->setAttribute('creater_sn', $account_sn);
+            }
+            $account_name = $this->session->get('account_name');
+            if ($account_name) {
+                $this->setAttribute('creater_name', $account_name);
+            }
 
-        $yard_sn = $this->session->get('yard_sn');
-        if ($yard_sn) {
-            $this->setAttribute('yard_sn', $yard_sn);
+            $yard_sn = $this->session->get('yard_sn');
+            if ($yard_sn) {
+                $this->setAttribute('yard_sn', $yard_sn);
+            }
+            if ($this->primarySn) {
+                $this->setAttribute($this->primarySn, snowFlakeId());
+            }
         }
 
     }
@@ -62,18 +78,18 @@ abstract class BaseModel extends Model implements CacheableInterface
      */
     public function updating(Updating $event)
     {
+        if ($this->hook) {
+            $account_sn = $this->session->get('account_sn');
+            $account_name = $this->session->get('account_name');
+            // $attrs = $this->getAttributes();  && array_key_exists('modifyer_name', $attrs)
 
-        $account_sn = $this->session->get('account_sn');
-        $account_name = $this->session->get('account_name');
-        // $attrs = $this->getAttributes();  && array_key_exists('modifyer_name', $attrs)
-
-        if ($account_sn) {
-            $this->setAttribute('modifyer_sn', $account_sn);
+            if ($account_sn) {
+                $this->setAttribute('modifyer_sn', $account_sn);
+            }
+            if ($account_name) {
+                $this->setAttribute('modifyer_name', $account_name);
+            }
         }
-        if ($account_name) {
-            $this->setAttribute('modifyer_name', $account_name);
-        }
-
     }
 
 }

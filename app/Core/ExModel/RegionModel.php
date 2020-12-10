@@ -16,4 +16,5 @@ use App\Model\MapRegion;
 class RegionModel extends MapRegion
 {
     protected $primaryKey = "region_id";
+    protected $hook = false;
 }

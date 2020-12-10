@@ -178,10 +178,10 @@ class AreaService extends BaseService
                                int $bedroom_num = 0, int $wc_room_num = 1, int $drawing_room_num = 1, array $introduce_imgs = [], array $layout_img = [],
                                array $introduce_video = [])
     {
-        $this->areaModel->area_sn = snowFlakeId();
+      //  $this->areaModel->area_sn = snowFlakeId();
         $this->areaModel->area_no = $area_no;
         $this->areaModel->area_name = $area_name;
-        $this->areaModel->yard_sn = $this->session->get('yard_sn');
+      //  $this->areaModel->yard_sn = $this->session->get('yard_sn');
         $this->areaModel->build_sn = $build_sn;
         $this->areaModel->floor_sn = $floor_sn;
         $this->areaModel->area_size = $area_size;

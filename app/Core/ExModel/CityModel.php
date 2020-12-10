@@ -16,4 +16,5 @@ use App\Model\MapCity;
 class CityModel extends MapCity
 {
     protected $primaryKey = "city_id";
+    protected $hook = false;
 }

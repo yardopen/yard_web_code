@@ -17,6 +17,7 @@ use App\Model\RentalTenant;
 class TenantModel extends RentalTenant
 {
     protected $primaryKey = 'tenant_id';
+    protected $primarySn ='tenant_sn';
 
 
     /**

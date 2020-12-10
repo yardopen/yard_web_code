@@ -13,4 +13,5 @@ namespace Core\ExModel;
 class AuthaccountModel extends \App\Model\AuthAccount
 {
     protected $primaryKey = 'account_id';
+    protected $primarySn = 'account_sn';
 }

@@ -15,6 +15,7 @@ use App\Model\RentalLease;
 class LeaseModel extends RentalLease
 {
     protected $primaryKey = "lease_id";
+    protected $primarySn ='lease_sn';
 
     protected $casts = [
         'start_date' => 'datetime:Y-m-d',

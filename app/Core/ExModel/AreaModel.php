@@ -14,6 +14,7 @@ use App\Model\YardArea;
 class AreaModel extends YardArea
 {
     protected $primaryKey = "area_id";
+    protected $primarySn = 'area_sn';
 
 
     //定义默认值
