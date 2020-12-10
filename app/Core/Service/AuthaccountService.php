@@ -27,10 +27,11 @@ class AuthaccountService extends BaseService
      */
     private $authaccountModel;
 
+
     /**
      * 根据条件查询
-     * @param string[] $columns
      * @param array|string $where
+     * @param string[] $columns
      * @return array|false
      */
     public function first($where, $columns = ['*'])
