@@ -128,27 +128,26 @@ class BuildService extends BaseService
      */
     public function editBuild(string $build_sn, string $build_name, float $build_size = 0, int $elevator_num = 0)
     {
-
         $update_where = [
             'yard_sn' => $this->session->get('yard_sn'),
             'build_sn' => $build_sn,
         ];
-        $update_db = [
-            'build_name' => $build_name,
-            'build_size' => $build_size,
-            'elevator_num' => $elevator_num,
-        ];
-        $res = $this->buildModel::query()->where($update_where)->update($update_db);
-        if ($res) {
-            return true;
+        /** @var BuildModel $model */
+        $model = $this->buildModel::query()->where($update_where)->first();
+        if (empty($model)) {
+            return false;
         }
-        return false;
+        $model->build_name = $build_name;
+        $model->build_size = $build_size;
+        $model->elevator_num = $elevator_num;
+        return $model->save();
     }
 
     /**
      * 删除楼栋
      * @param string $build_sn
-     * @return bool
+     * @return bool|null
+     * @throws \Exception
      */
     public function delBuild(string $build_sn)
     {
@@ -156,9 +155,10 @@ class BuildService extends BaseService
             'yard_sn' => $this->session->get('yard_sn'),
             'build_sn' => $build_sn,
         ];
-        $res = $this->buildModel::query()->where($delete_where)->delete();
-        if ($res) {
-            return true;
+        /** @var BuildModel $model */
+        $model = $this->buildModel::query()->where($delete_where)->first();
+        if ($model) {
+            return $model->delete();
         }
         return false;
     }
