@@ -72,9 +72,9 @@ class AreaService extends BaseService
 
     /**
      * 根据条件查询
-     * @param $where
+     * @param array|string $where
      * @param string[] $columns
-     * @return array|false
+     * @return false|array
      */
     public function first($where, $columns = ['*'])
     {
@@ -92,7 +92,14 @@ class AreaService extends BaseService
         return false;
     }
 
-
+    /**
+     * 房间列表
+     * @param $where
+     * @param string[] $columns
+     * @param int $page
+     * @param int $perPage
+     * @return array
+     */
     public function listArea($where, $columns = ['*'], int $page = 1, int $perPage = 15)
     {
         $yard_sn = $this->session->get('yard_sn');
@@ -178,10 +185,8 @@ class AreaService extends BaseService
                                int $bedroom_num = 0, int $wc_room_num = 1, int $drawing_room_num = 1, array $introduce_imgs = [], array $layout_img = [],
                                array $introduce_video = [])
     {
-      //  $this->areaModel->area_sn = snowFlakeId();
         $this->areaModel->area_no = $area_no;
         $this->areaModel->area_name = $area_name;
-      //  $this->areaModel->yard_sn = $this->session->get('yard_sn');
         $this->areaModel->build_sn = $build_sn;
         $this->areaModel->floor_sn = $floor_sn;
         $this->areaModel->area_size = $area_size;
@@ -268,13 +273,7 @@ class AreaService extends BaseService
             $model->area_type = $area_type;
             $model->is_investment = $is_investment;
         }
-
-
-        $res = $model->save();
-        if ($res) {
-            return true;
-        }
-        return false;
+        return $model->save();
 
     }
 
@@ -282,7 +281,8 @@ class AreaService extends BaseService
     /**
      * 删除房间
      * @param string $area_sn
-     * @return bool
+     * @return bool|null
+     * @throws \Exception
      */
     public function deleteArea(string $area_sn)
     {
@@ -290,10 +290,11 @@ class AreaService extends BaseService
             'yard_sn' => $this->session->get('yard_sn'),
             'area_sn' => $area_sn
         ];
-        $res = $this->areaModel::query()->where($where)->delete();
-        if ($res) {
-            return true;
+        /** @var AreaModel $model */
+        $model = $this->areaModel::query()->where($where)->first();
+        if (empty($model)) {
+            return false;
         }
-        return false;
+        return $model->delete();
     }
 }
