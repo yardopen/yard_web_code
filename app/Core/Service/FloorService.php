@@ -26,9 +26,9 @@ class FloorService extends BaseService
 
     /**
      * 根据条件查询
+     * @param $where
      * @param string[] $columns
-     * @param array|string $where
-     * @return array|false
+     * @return false|array
      */
     public function first($where, $columns = ['*'])
     {
@@ -55,10 +55,7 @@ class FloorService extends BaseService
      */
     public function createFloor(string $build_sn, int $floor_no, string $floor_img = '')
     {
-        $floor_sn = snowFlakeId();
-        $this->floorModel->floor_sn = $floor_sn;
         $this->floorModel->build_sn = $build_sn;
-        $this->floorModel->yard_sn = $this->session->get('yard_sn');
         $this->floorModel->floor_no = $floor_no;
         $this->floorModel->floor_img = $floor_img;
 
