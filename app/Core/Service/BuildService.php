@@ -106,16 +106,13 @@ class BuildService extends BaseService
      */
     public function createBuild(string $build_name, float $build_size = 0, int $elevator_num = 0)
     {
-        $insert_db = [
-            "build_sn" => snowFlakeId(),
-            'build_name' => $build_name,
-            'yard_sn' => $this->session->get('yard_sn'),
-            'build_size' => $build_size,
-            'elevator_num' => $elevator_num,
-        ];
-        $res = $this->buildModel->insert($insert_db);
+        $this->buildModel->build_name = $build_name;
+        $this->buildModel->build_size = $build_size;
+        $this->buildModel->elevator_num = $elevator_num;
+
+        $res = $this->buildModel->save();
         if ($res) {
-            return $insert_db['build_sn'];
+            return $this->buildModel->build_sn;
         }
         return false;
     }
