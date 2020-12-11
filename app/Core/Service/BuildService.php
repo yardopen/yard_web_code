@@ -78,23 +78,12 @@ class BuildService extends BaseService
     /**
      * 根据条件查询
      * @param string[] $columns
-     * @param array|string $where
+     * @param array $where
      * @return array|false
      */
-    public function first($where, $columns = ['*'])
+    public function first(array $where, $columns = ['*'])
     {
-        $yard_sn = $this->session->get('yard_sn');
-        if (is_array($where)) {
-            $where['yard_sn'] = $yard_sn;
-        } else {
-            $where .= " and yard_sn='{$yard_sn}'";
-        }
-
-        $obj = $this->buildModel::query()->where($where)->first($columns);
-        if ($obj) {
-            return $obj->toArray();
-        }
-        return false;
+        return $this->buildModel->getInfoByWhere($where, $columns);
     }
 
     /**
@@ -120,27 +109,22 @@ class BuildService extends BaseService
 
     /**
      * 通过楼栋编号修改楼栋信息
-     * @param string $build_sn
+     * @param int $build_id
      * @param string $build_name
      * @param float|int $build_size
      * @param int $elevator_num
      * @return bool
      */
-    public function editBuild(string $build_sn, string $build_name, float $build_size = 0, int $elevator_num = 0)
+    public function editBuild(int $build_id, string $build_name, float $build_size = 0, int $elevator_num = 0)
     {
-        $update_where = [
-            'yard_sn' => $this->session->get('yard_sn'),
-            'build_sn' => $build_sn,
+        $update_data = [
+            "build_name" => $build_name,
+            "build_size" => $build_size,
+            "elevator_num" => $elevator_num,
+            "build_id" => $build_id,
         ];
-        /** @var BuildModel $model */
-        $model = $this->buildModel::query()->where($update_where)->first();
-        if (empty($model)) {
-            return false;
-        }
-        $model->build_name = $build_name;
-        $model->build_size = $build_size;
-        $model->elevator_num = $elevator_num;
-        return $model->save();
+
+        return $this->buildModel->saveInfo($update_data);
     }
 
     /**
