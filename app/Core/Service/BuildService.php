@@ -95,15 +95,14 @@ class BuildService extends BaseService
      */
     public function createBuild(string $build_name, float $build_size = 0, int $elevator_num = 0)
     {
-        $this->buildModel->build_name = $build_name;
-        $this->buildModel->build_size = $build_size;
-        $this->buildModel->elevator_num = $elevator_num;
 
-        $res = $this->buildModel->save();
-        if ($res) {
-            return $this->buildModel->build_sn;
-        }
-        return false;
+        $insert_data = [
+            "build_name" => $build_name,
+            "build_size" => $build_size,
+            "elevator_num" => $elevator_num,
+        ];
+
+        return $this->buildModel->saveInfo($insert_data);
     }
 
 
