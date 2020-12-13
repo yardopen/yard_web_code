@@ -95,14 +95,18 @@ abstract class BaseModel extends Model implements CacheableInterface
      * @param bool $more 是否查询多条
      * @return array
      */
-    public function getInfoByWhere($where, $columns = ['*'], $more = false)
+    public function getInfoByWhere(array $where, $columns = ['*'], $more = false)
     {
         $instance = make(get_called_class());
         foreach ($where as $k => $v) {
             $instance = is_array($v) ? $instance->where($k, $v[0], $v[1]) : $instance->where($k, $v);
         }
         $instance->where("yard_sn", $this->session->get("yard_sn"));  //
-
+        $ptr = array_search("pk_id", $columns);
+        if (is_int($ptr)) {
+            unset($columns[$ptr]);
+        }
+        $columns[] = "{$this->primaryKey} as pk_id";
         $instance = $more ? $instance->get($columns) : $instance->first($columns);
 
         return $instance ? $instance->toArray() : [];

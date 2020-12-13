@@ -47,13 +47,12 @@ class BuildRepository extends BaseRepository
      */
     public function create(array $param)
     {
-        $chk = $this->buildService->first(['build_name' => $param['build_name']]);
+        $chk = $this->buildService->first(['build_name' => $param['build_name']], ['pk_id']);
         if ($chk) {
             return $this->code(400, "楼栋已存在");
         }
         $res = $this->buildService->createBuild($param['build_name'], $param['build_size'], $param['elevator_num']);
         if (is_bool($res)) {
-
             return $this->code(400, "楼栋创建失败");
         }
         return $this->code(200, "楼栋创建成功", ["build_sn" => $res]);
@@ -67,7 +66,7 @@ class BuildRepository extends BaseRepository
      */
     public function edit(array $param)
     {
-        $chk = $this->buildService->first(['build_sn' => $param['build_sn']]);
+        $chk = $this->buildService->first(['build_sn' => $param['build_sn'], ["pk_id"]]);
         if (empty($chk)) {
             return $this->code(400, "楼栋不存在");
         }
@@ -75,12 +74,12 @@ class BuildRepository extends BaseRepository
             "build_name" => $param['build_name'],
             "build_sn" => ['<>', $param['build_sn']],
         ];
-        $chk2 = $this->buildService->first($where);
+        $chk2 = $this->buildService->first($where, ["pk_id"]);
         if ($chk2) {
             return $this->code(400, "楼栋名称已存在");
         }
 
-        $res = $this->buildService->editBuild($chk['build_id'], $param['build_name'], $param['build_size'], $param['elevator_num']);
+        $res = $this->buildService->editBuild($chk['pk_id'], $param['build_name'], $param['build_size'], $param['elevator_num']);
         if ($res) {
             return $this->code(200, "楼栋修改成功", ["build_sn" => $param['build_sn']]);
 
@@ -96,18 +95,18 @@ class BuildRepository extends BaseRepository
     public function delete(array $param)
     {
         //第一步：检查楼栋是否存在
-        $chk = $this->buildService->first(['build_sn' => $param['build_sn']]);
+        $chk = $this->buildService->first(['build_sn' => $param['build_sn']], ["pk_id"]);
         if (empty($chk)) {
             return $this->code(400, "楼栋不存在");
         }
         //第二步：检查房间
-        $chk_area = $this->areaService->first(['build_sn' => $param['build_sn']]);
+        $chk_area = $this->areaService->first(['build_sn' => $param['build_sn'], ['pk_id']]);
         if ($chk_area) {
             return $this->code(400, "楼栋还存在区域,暂不能被删除");
         }
 
         //第三步：删除
-        $res = $this->buildService->delBuild($param['build_sn']);
+        $res = $this->buildService->delBuild($chk['pk_id']);
         if ($res) {
             return $this->code(200, "楼栋删除成功", ["build_sn" => $param['build_sn']]);
 

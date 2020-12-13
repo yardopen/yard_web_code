@@ -128,22 +128,12 @@ class BuildService extends BaseService
 
     /**
      * 删除楼栋
-     * @param string $build_sn
+     * @param int $build_id
      * @return bool|null
-     * @throws \Exception
      */
-    public function delBuild(string $build_sn)
+    public function delBuild(int $build_id)
     {
-        $delete_where = [
-            'yard_sn' => $this->session->get('yard_sn'),
-            'build_sn' => $build_sn,
-        ];
-        /** @var BuildModel $model */
-        $model = $this->buildModel::query()->where($delete_where)->first();
-        if ($model) {
-            return $model->delete();
-        }
-        return false;
+        return $this->buildModel->deleteInfo($build_id);
     }
 
 
