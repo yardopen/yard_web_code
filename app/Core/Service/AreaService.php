@@ -72,24 +72,14 @@ class AreaService extends BaseService
 
     /**
      * 根据条件查询
-     * @param array|string $where
+     * @param array $where
      * @param string[] $columns
-     * @return false|array
+     * @return array
      */
-    public function first($where, $columns = ['*'])
+    public function first(array $where, $columns = ['*'])
     {
-        $yard_sn = $this->session->get('yard_sn');
-        if (is_array($where)) {
-            $where['yard_sn'] = $yard_sn;
-        } else {
-            $where .= " and yard_sn='{$yard_sn}'";
-        }
 
-        $obj = $this->areaModel::query()->where($where)->first($columns);
-        if ($obj) {
-            return $obj->toArray();
-        }
-        return false;
+        return $this->areaModel->getInfoByWhere($where, $columns);
     }
 
     /**
@@ -185,37 +175,34 @@ class AreaService extends BaseService
                                int $bedroom_num = 0, int $wc_room_num = 1, int $drawing_room_num = 1, array $introduce_imgs = [], array $layout_img = [],
                                array $introduce_video = [])
     {
-        $this->areaModel->area_no = $area_no;
-        $this->areaModel->area_name = $area_name;
-        $this->areaModel->build_sn = $build_sn;
-        $this->areaModel->floor_sn = $floor_sn;
-        $this->areaModel->area_size = $area_size;
-        $this->areaModel->area_type = $area_type;
-        $this->areaModel->is_investment = $is_investment;
-        $this->areaModel->orientations = $orientations;
-        $this->areaModel->rental_price = $rental_price;
-        $this->areaModel->rental_unit = $rental_unit;
-        $this->areaModel->renovation_type = $renovation_type;
-        $this->areaModel->layout_type = $layout_type;
-        $this->areaModel->bedroom_num = $bedroom_num;
-        $this->areaModel->wc_room_num = $wc_room_num;
-        $this->areaModel->drawing_room_num = $drawing_room_num;
-
-        $this->areaModel->introduce_imgs = $introduce_imgs;
-        $this->areaModel->layout_img = $layout_img;
-        $this->areaModel->introduce_video = $introduce_video;
-        $res = $this->areaModel->save();
-        if ($res) {
-            return $this->areaModel->area_sn;
-        }
-        return false;
+        $create_data = [
+            "area_no" => $area_no,
+            "area_name" => $area_name,
+            "build_sn" => $build_sn,
+            "floor_sn" => $floor_sn,
+            "area_size" => $area_size,
+            "area_type" => $area_type,
+            "is_investment" => $is_investment,
+            "orientations" => $orientations,
+            "rental_price" => $rental_price,
+            "rental_unit" => $rental_unit,
+            "renovation_type" => $renovation_type,
+            "layout_type" => $layout_type,
+            "bedroom_num" => $bedroom_num,
+            "wc_room_num" => $wc_room_num,
+            "drawing_room_num" => $drawing_room_num,
+            "introduce_imgs" => $introduce_imgs,
+            "layout_img" => $layout_img,
+            "introduce_video" => $introduce_video,
+        ];
+        return $this->areaModel->saveInfo($create_data);
     }
 
 
     /**
      * 修改房间
+     * @param int $area_id 房间ID
      * @param bool $is_rental 是否在租赁中
-     * @param string $area_sn 房间编号
      * @param string $area_name 房间别名
      * @param float|int $area_size 房间尺寸
      * @param int $area_type 户型 1：普通   2复式
@@ -233,68 +220,54 @@ class AreaService extends BaseService
      * @param array $introduce_video
      * @return bool
      */
-    public function editArea(bool $is_rental, string $area_sn, string $area_name = '', float $area_size = 0, int $area_type = 0,
+    public function editArea(int $area_id, bool $is_rental, string $area_name = '', float $area_size = 0, int $area_type = 0,
                              int $is_investment = 1,
                              int $orientations = 0, float $rental_price = 0, int $rental_unit = 1, int $renovation_type = 0, int $layout_type = 1,
                              int $bedroom_num = 0, int $wc_room_num = 1, int $drawing_room_num = 1, array $introduce_imgs = [], array $layout_img = [],
                              array $introduce_video = [])
     {
-        $where = [
-            "area_sn" => $area_sn,
-            'yard_sn' => $this->session->get('yard_sn'),
+
+
+        $update_data = [
+            "area_id" => $area_id,
+
+            "area_name" => $area_name,
+            "area_size" => $area_size,
+            "orientations" => $orientations,
+            "rental_price" => $rental_price,
+            "rental_unit" => $rental_unit,
+            "renovation_type" => $renovation_type,
+            "layout_type" => $layout_type,
+
+            "introduce_imgs" => $introduce_imgs,
+            "layout_img" => $layout_img,
+            "introduce_video" => $introduce_video,
         ];
 
-        /** @var AreaModel $model */
-        $model = $this->areaModel::where($where)->first(); //query()->where($where)->first();
-        if (empty($model)) {
-            return false;
-        }
-        $model->area_name = $area_name;
-        $model->area_size = $area_size;
-        $model->orientations = $orientations;
-        $model->rental_price = $rental_price;
-        $model->rental_unit = $rental_unit;
-        $model->renovation_type = $renovation_type;
-        $model->layout_type = $layout_type;
-
-        $model->introduce_imgs = $introduce_imgs;
-        $model->layout_img = $layout_img;
-        $model->introduce_video = $introduce_video;
 
         if ($layout_type == 1) { //普通房
-            $model->bedroom_num = $bedroom_num;
-            $model->wc_room_num = $wc_room_num;
-            $model->drawing_room_num = $drawing_room_num;
+            $update_data['bedroom_num'] = $bedroom_num;
+            $update_data['wc_room_num'] = $wc_room_num;
+            $update_data['drawing_room_num'] = $drawing_room_num;
         }
-
-
         //2:检查房屋是否在租赁中
         if (!$is_rental) { //非租赁中
-            $model->area_type = $area_type;
-            $model->is_investment = $is_investment;
+            $update_data['area_type'] = $area_type;
+            $update_data['is_investment'] = $is_investment;
+
         }
-        return $model->save();
+        return $this->areaModel->saveInfo($update_data);
 
     }
 
 
     /**
      * 删除房间
-     * @param string $area_sn
-     * @return bool|null
-     * @throws \Exception
+     * @param array|int $area_id
+     * @return int
      */
-    public function deleteArea(string $area_sn)
+    public function deleteArea($area_id)
     {
-        $where = [
-            'yard_sn' => $this->session->get('yard_sn'),
-            'area_sn' => $area_sn
-        ];
-        /** @var AreaModel $model */
-        $model = $this->areaModel::query()->where($where)->first();
-        if (empty($model)) {
-            return false;
-        }
-        return $model->delete();
+        return $this->areaModel->deleteInfo($area_id);
     }
 }

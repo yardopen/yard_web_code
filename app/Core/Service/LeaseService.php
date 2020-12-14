@@ -18,24 +18,14 @@ class LeaseService extends BaseService
 {
     /**
      * 根据条件查询
+     * @param $where
      * @param string[] $columns
-     * @param array|string $where
-     * @return array|false
+     * @return array
      */
     public function first($where, $columns = ['*'])
     {
-        $yard_sn = $this->session->get('yard_sn');
-        if (is_array($where)) {
-            $where['yard_sn'] = $yard_sn;
-        } else {
-            $where .= " and yard_sn='{$yard_sn}'";
-        }
 
-        $obj = $this->leaseModel::query()->where($where)->first($columns);
-        if ($obj) {
-            return $obj->toArray();
-        }
-        return false;
+        return $this->leaseModel->getInfoByWhere($where, $columns);
     }
 
     /**

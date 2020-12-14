@@ -68,7 +68,7 @@ abstract class BaseModel extends Model implements CacheableInterface
      * @param array $data 保存数据
      * @return string
      */
-    public function saveInfo($data)
+    public function saveInfo(array $data)
     {
         $id = empty($data[$this->primaryKey]) ? 0 : $data[$this->primaryKey];
         $primarySn = $this->primarySn;

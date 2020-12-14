@@ -44,14 +44,14 @@ class TenantRepository extends BaseRepository
         $where = [
             "tenant_sn" => $param['tenant_sn'],
         ];
-        $tenant_chk_res = $this->tenantService->first($where, ['tenant_id']);
+        $tenant_chk_res = $this->tenantService->first($where, ['pk_id']);
         if (!$tenant_chk_res) {
             return $this->code(400, "租户不存在");
         }
 
 
         //2：修改租户信息
-        $tenant_res = $this->tenantService->editTenant($param['tenant_sn'], $param['tenant_type'], $param['tenant_name'], $param['certificate_num'], $param['contact_name'], $param['contact_tel']);
+        $tenant_res = $this->tenantService->editTenant($tenant_chk_res['pk_id'], $param['tenant_type'], $param['tenant_name'], $param['certificate_num'], $param['contact_name'], $param['contact_tel']);
         if (!$tenant_res) {
             return $this->code(400, "租户信息修改失败");
         }

@@ -123,7 +123,7 @@ class AreaRepository extends BaseRepository
     public function deleteArea(array $param)
     {
         $where = ["area_sn" => $param['area_sn']];
-        $chk_res = $this->areaService->first($where);
+        $chk_res = $this->areaService->first($where, ['pk_id', 'lease_sn']);
         if (empty($chk_res)) {
             return $this->code(400, "房间不存在");
         }

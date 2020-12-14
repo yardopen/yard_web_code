@@ -32,18 +32,7 @@ class FloorService extends BaseService
      */
     public function first($where, $columns = ['*'])
     {
-        $yard_sn = $this->session->get('yard_sn');
-        if (is_array($where)) {
-            $where['yard_sn'] = $yard_sn;
-        } else {
-            $where .= " and yard_sn='{$yard_sn}'";
-        }
-
-        $obj = $this->floorModel::query()->where($where)->first($columns);
-        if ($obj) {
-            return $obj->toArray();
-        }
-        return false;
+        return $this->floorModel->getInfoByWhere($where, $columns);
     }
 
     /**
@@ -55,14 +44,14 @@ class FloorService extends BaseService
      */
     public function createFloor(string $build_sn, int $floor_no, string $floor_img = '')
     {
-        $this->floorModel->build_sn = $build_sn;
-        $this->floorModel->floor_no = $floor_no;
-        $this->floorModel->floor_img = $floor_img;
 
-        $res = $this->floorModel->save();
-        if ($res) {
-            return $this->floorModel->floor_sn;
-        }
-        return false;
+        $insert_data = [
+            "build_sn" => $build_sn,
+            "floor_no" => $floor_no,
+            "floor_img" => $floor_img,
+        ];
+
+        return $this->floorModel->saveInfo($insert_data);
+
     }
 }

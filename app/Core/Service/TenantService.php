@@ -21,23 +21,12 @@ class TenantService extends BaseService
     /**
      * 根据条件查询
      * @param string[] $columns
-     * @param array|string $where
-     * @return array|false
+     * @param array $where
+     * @return array
      */
-    public function first($where, $columns = ['*'])
+    public function first(array $where, $columns = ['*'])
     {
-        $yard_sn = $this->session->get('yard_sn');
-        if (is_array($where)) {
-            $where['yard_sn'] = $yard_sn;
-        } else {
-            $where .= " and yard_sn='{$yard_sn}'";
-        }
-
-        $obj = $this->tenantModel::query()->where($where)->first($columns);
-        if ($obj) {
-            return $obj->toArray();
-        }
-        return false;
+        return $this->tenantModel->getInfoByWhere($where, $columns);
     }
 
     /**
@@ -87,31 +76,26 @@ class TenantService extends BaseService
 
     /**
      * 修改租户信息
-     * @param string $tenant_sn
+     * @param int $tenant_id
      * @param int $tenant_type
      * @param string $tenant_name
      * @param string $certificate_num
      * @param string $contact_name
      * @param string $contact_tel
-     * @return bool
+     * @return string
      */
-    public function editTenant(string $tenant_sn, int $tenant_type, string $tenant_name, string $certificate_num, string $contact_name, string $contact_tel)
+    public function editTenant(int $tenant_id, int $tenant_type, string $tenant_name, string $certificate_num, string $contact_name, string $contact_tel)
     {
-        $where = [
-            'yard_sn' => $this->session->get('yard_sn'),
-            'tenant_sn' => $tenant_sn,
-        ];
+
         $update_db = [
+            'tenant_id' => $tenant_id,
             'tenant_type' => $tenant_type,
             'tenant_name' => $tenant_name,
             'certificate_num' => $certificate_num,
             'contact_name' => $contact_name,
             'contact_tel' => $contact_tel
         ];
-        $res = $this->tenantModel::query()->where($where)->update($update_db);
-        if ($res) {
-            return true;
-        }
-        return false;
+
+        return $this->tenantModel->saveInfo($update_db);
     }
 }

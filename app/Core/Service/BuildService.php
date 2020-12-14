@@ -48,11 +48,14 @@ class BuildService extends BaseService
             ->get()->all();
         $data = [];
         foreach ($res as $key => $val) {
+            //房间数量
             $val['area_num'] = count($val['area']);
+            //根据最大房号获取楼层数量
             $max_no = max(array_column(json_decode($val['area'], true), "area_no")); //获取最大区域号
             $sub_len = strlen($max_no) == 4 ? 2 : 1;
             $val['floor_num'] = (int)substr($max_no, 0, $sub_len);//获取楼层高楼
             unset($val['area']);
+            //
             $data[] = $val;
         }
 
