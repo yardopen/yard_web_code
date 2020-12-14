@@ -60,4 +60,29 @@ class TenantRepository extends BaseRepository
 
         return $this->code(200, "租户信息修改成功");
     }
+
+    /**
+     * 添加租户
+     * @param array $param
+     * @return array
+     */
+    public function CreateTenant(array $param)
+    {
+
+        //1:查询租户
+        $where = [
+            "certificate_num" => $param['certificate_num'],
+        ];
+        $tenant_chk_res = $this->tenantService->first($where, ['pk_id']);
+        if ($tenant_chk_res) {
+            return $this->code(400, "租户已存在");
+
+        }
+        //2：添加租户信息
+        $res = $this->tenantService->CreateTenant($param['tenant_type'], $param['tenant_name'], $param['certificate_num'], $param['contact_name'], $param['contact_tel']);
+        if ($res) {
+            return $this->code(200, "租户创建成功", ['tenant_sn' => $res]);
+        }
+        return $this->code(400, "租户创建失败");
+    }
 }

@@ -76,12 +76,14 @@ abstract class BaseModel extends Model implements CacheableInterface
         if ($id) {
             $instance = $instance->query()->find($id);
         }
+        if (empty($instance)) {
+            return '';
+        }
         foreach ($data as $k => $v) {
             $instance->$k = $v;
         }
         $res = $instance->save();
         return $res ? $instance->$primarySn : '';
-
 
     }
 

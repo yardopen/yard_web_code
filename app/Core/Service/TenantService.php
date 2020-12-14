@@ -73,10 +73,23 @@ class TenantService extends BaseService
         return $data;
     }
 
+    public function editTenant(int $tenant_type, string $tenant_name, string $certificate_num, string $contact_name, string $contact_tel)
+    {
+
+        $create_db = [
+            'tenant_type' => $tenant_type,
+            'tenant_name' => $tenant_name,
+            'certificate_num' => $certificate_num,
+            'contact_name' => $contact_name,
+            'contact_tel' => $contact_tel
+        ];
+
+        return $this->tenantModel->saveInfo($create_db);
+    }
+
 
     /**
-     * 修改租户信息
-     * @param int $tenant_id
+     * 添加租户信息
      * @param int $tenant_type
      * @param string $tenant_name
      * @param string $certificate_num
@@ -84,11 +97,10 @@ class TenantService extends BaseService
      * @param string $contact_tel
      * @return string
      */
-    public function editTenant(int $tenant_id, int $tenant_type, string $tenant_name, string $certificate_num, string $contact_name, string $contact_tel)
+    public function CreateTenant( int $tenant_type, string $tenant_name, string $certificate_num, string $contact_name, string $contact_tel)
     {
 
         $update_db = [
-            'tenant_id' => $tenant_id,
             'tenant_type' => $tenant_type,
             'tenant_name' => $tenant_name,
             'certificate_num' => $certificate_num,
