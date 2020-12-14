@@ -73,10 +73,11 @@ class TenantService extends BaseService
         return $data;
     }
 
-    public function editTenant(int $tenant_type, string $tenant_name, string $certificate_num, string $contact_name, string $contact_tel)
+    public function editTenant(int $tenant_id, int $tenant_type, string $tenant_name, string $certificate_num, string $contact_name, string $contact_tel)
     {
 
-        $create_db = [
+        $update_db = [
+            'tenant_id' => $tenant_id,
             'tenant_type' => $tenant_type,
             'tenant_name' => $tenant_name,
             'certificate_num' => $certificate_num,
@@ -84,7 +85,7 @@ class TenantService extends BaseService
             'contact_tel' => $contact_tel
         ];
 
-        return $this->tenantModel->saveInfo($create_db);
+        return $this->tenantModel->saveInfo($update_db);
     }
 
 
@@ -97,7 +98,7 @@ class TenantService extends BaseService
      * @param string $contact_tel
      * @return string
      */
-    public function CreateTenant( int $tenant_type, string $tenant_name, string $certificate_num, string $contact_name, string $contact_tel)
+    public function CreateTenant(int $tenant_type, string $tenant_name, string $certificate_num, string $contact_name, string $contact_tel)
     {
 
         $update_db = [
