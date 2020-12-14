@@ -66,7 +66,8 @@ class BuildRepository extends BaseRepository
      */
     public function edit(array $param)
     {
-        $chk = $this->buildService->first(['build_sn' => $param['build_sn'], ["pk_id"]]);
+
+        $chk = $this->buildService->first(['build_sn' => $param['build_sn']], ["pk_id"]);
         if (empty($chk)) {
             return $this->code(400, "楼栋不存在");
         }

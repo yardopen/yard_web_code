@@ -86,10 +86,7 @@ abstract class BaseModel extends Model implements CacheableInterface
     }
 
     /**
-     * getInfoByWhere
      * 根据条件获取结果
-     * User：YM
-     * Date：2020/1/9
      * @param array $where
      * @param array $columns
      * @param bool $more 是否查询多条
@@ -98,15 +95,18 @@ abstract class BaseModel extends Model implements CacheableInterface
     public function getInfoByWhere(array $where, $columns = ['*'], $more = false)
     {
         $instance = make(get_called_class());
+        //查询条件
+        $where['yard_sn'] = $this->session->get("yard_sn");
         foreach ($where as $k => $v) {
             $instance = is_array($v) ? $instance->where($k, $v[0], $v[1]) : $instance->where($k, $v);
         }
-        $instance->where("yard_sn", $this->session->get("yard_sn"));  //
+        //查询字段
         $ptr = array_search("pk_id", $columns);
         if (is_int($ptr)) {
             unset($columns[$ptr]);
         }
         $columns[] = "{$this->primaryKey} as pk_id";
+        //获得结果
         $instance = $more ? $instance->get($columns) : $instance->first($columns);
 
         return $instance ? $instance->toArray() : [];

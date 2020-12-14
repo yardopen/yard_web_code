@@ -78,7 +78,7 @@ class BuildService extends BaseService
     /**
      * 根据条件查询
      * @param string[] $columns
-     * @param array $where
+     * @param array|string $where
      * @return array|false
      */
     public function first(array $where, $columns = ['*'])
