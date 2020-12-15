@@ -38,37 +38,37 @@ class AuthMiddleware implements MiddlewareInterface
     {
 
         $isValidToken = $this->tokenVaild();
-        if ($isValidToken) {
+        if ($isValidToken === StatusCode::SUCCESS) {
             return $handler->handle($request);
         }
 
-        return $this->response->error(StatusCode::ERR_INVALID_TOKEN);
+        return $this->response->error($isValidToken);
     }
 
     /**
      * 判断当前tokn是否效
-     * @return bool
+     * @return int
      */
     private function tokenVaild()
     {
 
         $token = $this->request->getHeaderLine('token');
         if (empty($token)) {
-            return false;
+            return StatusCode::ERR_NOT_LOGIN;
         }
         $cache = Cache::get();
         $token_json = $cache->get($token);
         if (empty($token_json)) {
-            return false;
+            return StatusCode::ERR_EXPIRE_TOKEN;
         }
         try {
             $cache->expire($token, Cache::maxIdelTime());
             $token_arr = json_decode($token_json, true);
             if (is_array($token_arr) && !empty($token_arr['yard_sn'])) {
-                return true;
+                return StatusCode::SUCCESS;
             }
         } catch (\Exception $e) {
-            return false;
+            return StatusCode::ERR_INVALID_TOKEN;
         }
 
     }

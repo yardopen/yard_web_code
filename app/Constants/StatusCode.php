@@ -9,6 +9,7 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 namespace App\Constants;
 
 use Hyperf\Constants\AbstractConstants;
@@ -20,7 +21,7 @@ use Hyperf\Constants\Annotation\Constants;
  * 授权相关，1001……
  * 用户相关，2001……
  * 业务相关，3001……
- * @method static  StatusCode getMessage(int $error_code) 获取对应状态友的错误信息
+ * @method static StatusCode getMessage(int $error_code) 获取对应状态友的错误信息
  */
 class StatusCode extends AbstractConstants
 {
@@ -36,9 +37,9 @@ class StatusCode extends AbstractConstants
 
 
     /**
-     * @Message("无权限访问！")
+     * @Message("请登录获取令牌！")
      */
-    const ERR_NOT_ACCESS = 1001;
+    const ERR_NOT_LOGIN = 1001;
 
     /**
      * @Message("令牌过期！")
@@ -49,28 +50,10 @@ class StatusCode extends AbstractConstants
      * @Message("令牌无效！")
      */
     const ERR_INVALID_TOKEN = 1003;
-
     /**
      * @Message("令牌不存在！")
      */
     const ERR_NOT_EXIST_TOKEN = 1004;
-
-
-
-    /**
-     * @Message("请登录！")
-     */
-    const ERR_NOT_LOGIN = 2001;
-
-    /**
-     * @Message("用户信息错误！")
-     */
-    const ERR_USER_INFO = 2002;
-
-    /**
-     * @Message("用户不存在！")
-     */
-    const ERR_USER_ABSENT = 2003;
 
 
     /**
@@ -78,16 +61,5 @@ class StatusCode extends AbstractConstants
      */
     const ERR_EXCEPTION = 3001;
 
-    /**
-     * 用户相关逻辑异常
-     * @Message("用户密码不正确！")
-     */
-    const ERR_EXCEPTION_USER = 3002;
-
-    /**
-     * 文件上传
-     * @Message("文件上传异常！")
-     */
-    const ERR_EXCEPTION_UPLOAD = 3003;
 
 }
