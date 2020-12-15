@@ -33,7 +33,7 @@ class CreateRequest extends AbstractRequest
             "layout_type" => "required|integer|between:1,2",//户型 1：普通   2复式
             "bedroom_num" => "integer|between:0,9", //房
             "wc_room_num" => "integer|between:0,9", //卫
-            "drawing_room_num" => "required|integer|between:0,9", //厅
+            "drawing_room_num" => "integer|between:0,9", //厅
             "introduce_imgs" => "array", //房间图片
             "layout_img" => "array", //平面图
             "introduce_video" => "array", //房间视频
@@ -82,6 +82,8 @@ class CreateRequest extends AbstractRequest
     public function attributes(): array
     {
         return [
+            "build_sn" => "楼栋sn",//楼栋编号
+            "area_no" => "房间号",//区数字编号
 
         ];
     }

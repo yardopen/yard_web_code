@@ -20,7 +20,7 @@ class DeleteRequest extends AbstractRequest
     public function rules(): array
     {
         return [
-            "build_sn" => "required|digits_between:1,20",//楼栋编号
+            "area_sn" => "required|digits_between:1,20",//楼栋编号
         ];
     }
 
@@ -30,7 +30,7 @@ class DeleteRequest extends AbstractRequest
     protected function validationData(): array
     {
         return [
-            "build_sn" => $this->input("build_sn", ''),
+            "area_sn" => $this->input("area_sn", ''),
         ];
     }
 
@@ -50,7 +50,7 @@ class DeleteRequest extends AbstractRequest
     public function attributes(): array
     {
         return [
-
+            "area_sn"=>'房间sn'
         ];
     }
 }
