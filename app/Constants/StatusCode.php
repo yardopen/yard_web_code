@@ -31,6 +31,11 @@ class StatusCode extends AbstractConstants
     const SUCCESS = 200;
 
     /**
+     * @Message("业务逻辑异常！")
+     */
+    const ERR_EXCEPTION = 400;
+
+    /**
      * @Message("Internal Server Error!")
      */
     const ERR_SERVER = 500;
@@ -54,12 +59,6 @@ class StatusCode extends AbstractConstants
      * @Message("令牌不存在！")
      */
     const ERR_NOT_EXIST_TOKEN = 1004;
-
-
-    /**
-     * @Message("业务逻辑异常！")
-     */
-    const ERR_EXCEPTION = 3001;
 
 
 }
