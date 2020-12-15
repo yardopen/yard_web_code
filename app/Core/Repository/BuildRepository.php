@@ -101,7 +101,7 @@ class BuildRepository extends BaseRepository
             return $this->code(400, "楼栋不存在");
         }
         //第二步：检查房间
-        $chk_area = $this->areaService->first(['build_sn' => $param['build_sn'], ['pk_id']]);
+        $chk_area = $this->areaService->first(['build_sn' => $param['build_sn']], ['pk_id']);
         if ($chk_area) {
             return $this->code(400, "楼栋还存在区域,暂不能被删除");
         }
