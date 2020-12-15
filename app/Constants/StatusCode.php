@@ -18,10 +18,7 @@ use Hyperf\Constants\Annotation\Constants;
 /**
  * @Constants
  * 自定义业务代码规范如下：
- * 授权相关，1001……
- * 用户相关，2001……
- * 业务相关，3001……
- * @method static StatusCode getMessage(int $error_code) 获取对应状态友的错误信息
+ * @method static  string getMessage(int $error_code)  获取对应状态友的错误信息
  */
 class StatusCode extends AbstractConstants
 {

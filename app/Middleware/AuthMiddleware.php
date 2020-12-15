@@ -41,8 +41,8 @@ class AuthMiddleware implements MiddlewareInterface
         if ($isValidToken === StatusCode::SUCCESS) {
             return $handler->handle($request);
         }
-
-        return $this->response->error(StatusCode::ERR_INVALID_TOKEN);
+        $err_msg = StatusCode::getMessage($isValidToken);
+        return $this->response->error(StatusCode::ERR_INVALID_TOKEN, $err_msg);
     }
 
     /**
