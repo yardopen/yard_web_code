@@ -41,6 +41,7 @@ Router::addGroup('/', function () {
         Router::addRoute(['GET', 'POST'], 'create', 'App\Controller\AreaController@create');
         Router::addRoute(['GET', 'POST'], 'edit', 'App\Controller\AreaController@edit');
         Router::addRoute(['GET', 'POST'], 'delete', 'App\Controller\AreaController@delete');
+        Router::addRoute(['GET', 'POST'], 'param-list', 'App\Controller\AreaController@areaParamList');
     });
 
     //租户

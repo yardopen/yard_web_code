@@ -23,6 +23,18 @@ use App\Request\Area\ListRequest;
  */
 class AreaController extends BaseController
 {
+
+    /**
+     * 房间参数列表，用于房间新建、修改、列表查询
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function areaParamList()
+    {
+        $res = $this->areaRepo->areaParamList();
+        return $this->success($res['msg'], $res['data']);
+    }
+
+
     /**
      * 房间列表
      * @param ListRequest $listRequest

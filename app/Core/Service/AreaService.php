@@ -69,6 +69,15 @@ class AreaService extends BaseService
         return $this->areaModel->rental_unit_name;
     }
 
+    /**
+     * 房间状态
+     * @return string[]
+     */
+    public function roomStatus()
+    {
+        return $this->areaModel->room_status;
+    }
+
 
     /**
      * 根据条件查询
@@ -133,6 +142,8 @@ class AreaService extends BaseService
             $res_arr[$key]["room_status"] = '自住';
             if (empty($val->lease_sn)) {
                 $res_arr[$key]["room_status"] = $val->is_investment == 1 ? '招商中' : "自住";
+            } elseif (time() > strtotime((string)$val->lease->start_date)) {
+                $res_arr[$key]["room_status"] = "已招商(待服务)";
             } elseif (time() > strtotime((string)$val->lease->end_date)) {
                 $res_arr[$key]["room_status"] = "已招商(已逾期)";
             } else {

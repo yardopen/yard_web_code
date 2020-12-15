@@ -22,7 +22,7 @@ class AreaRepository extends BaseRepository
      * 房间添加编辑选项数据
      * @return array
      */
-    public function areaAddEditList()
+    public function areaParamList()
     {
         $res = [
             "orientations" => $this->areaService->orientations(), //朝向
@@ -30,8 +30,9 @@ class AreaRepository extends BaseRepository
             'room_area_type' => $this->areaService->roomAreaType(), //房间类型
             'room_layout' => $this->areaService->roomLayout(), //户型
             'room_rental_unit' => $this->areaService->roomRentalUnit(), //租赁单价单位
+            'room_status' => $this->areaService->roomStatus()
         ];
-        return $this->code(200, "楼栋列表", $res);
+        return $this->code(200, "房间参数列表", $res);
     }
 
     /**
@@ -46,7 +47,7 @@ class AreaRepository extends BaseRepository
             'layout_img', 'introduce_video', 'build_sn', 'lease_sn'];
 
         $where = array_filter([
-            'area_sn' => $param['area_sn'],
+            'area_no' => $param['area_no'],
             'build_sn' => $param['build_sn'],
             'orientations' => $param['room_orientations'],
             'area_type' => $param['area_type'],

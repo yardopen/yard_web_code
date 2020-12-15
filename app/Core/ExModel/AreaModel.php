@@ -95,6 +95,17 @@ class AreaModel extends YardArea
         3 => '元/月',
     ];
 
+    /**
+     * @var string[]
+     */
+    public $room_status=[
+        1=>'自住',
+        2=>'招商中',
+        3=>'已招商(待服务)',
+        3=>'已招商(服务中)',
+        4=>'已招商(已逾期)'
+    ];
+
 
     /**
      * 房间类型(户型)
