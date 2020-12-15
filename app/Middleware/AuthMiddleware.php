@@ -42,7 +42,7 @@ class AuthMiddleware implements MiddlewareInterface
             return $handler->handle($request);
         }
 
-        return $this->response->error($isValidToken);
+        return $this->response->error(StatusCode::ERR_INVALID_TOKEN);
     }
 
     /**
