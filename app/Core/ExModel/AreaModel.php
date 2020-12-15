@@ -74,6 +74,7 @@ class AreaModel extends YardArea
      * @var string[]
      */
     public $layout_type_name = [
+        //  0 => '请选择',
         1 => '普通',
         2 => '复式',
     ];
@@ -82,6 +83,7 @@ class AreaModel extends YardArea
      * @var string[]
      */
     public $room_investment = [
+        // 0 => '请选择',
         1 => '不可招商',
         2 => '可招商',
     ];
@@ -90,6 +92,7 @@ class AreaModel extends YardArea
      * @var string[]
      */
     public $rental_unit_name = [
+        //  0 => '请选择',
         1 => '元/㎡.月',
         2 => '元/㎡.天',
         3 => '元/月',
@@ -98,12 +101,13 @@ class AreaModel extends YardArea
     /**
      * @var string[]
      */
-    public $room_status=[
-        1=>'自住',
-        2=>'招商中',
-        3=>'已招商(待服务)',
-        3=>'已招商(服务中)',
-        4=>'已招商(已逾期)'
+    public $room_status = [
+        0 => '全部',
+        1 => '自住',
+        2 => '招商中',
+        3 => '已招商(待服务)',
+        4 => '已招商(服务中)',
+        5 => '已招商(已逾期)'
     ];
 
 

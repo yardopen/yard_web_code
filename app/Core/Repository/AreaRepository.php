@@ -46,18 +46,43 @@ class AreaRepository extends BaseRepository
             'rental_unit', 'renovation_type', 'layout_type', 'bedroom_num', 'wc_room_num', 'drawing_room_num', 'introduce_imgs',
             'layout_img', 'introduce_video', 'build_sn', 'lease_sn'];
 
-        $where = array_filter([
+        $where['area'] = array_filter([
             'area_no' => $param['area_no'],
             'build_sn' => $param['build_sn'],
             'orientations' => $param['room_orientations'],
             'area_type' => $param['area_type'],
         ], function ($val) {  //保留0
-            if ($val === 0 || $val != false) {
+            if ($val > 0 || $val != false) {
                 return true;
             } else {
                 false;
             }
         });
+
+        $room_status = $param['room_status'];
+        if ($room_status == 1) {  //自住
+            $where['area']['is_investment'] = 2;
+        } elseif ($room_status > 1) {
+            $where['area']['is_investment'] = 1;
+            switch ($room_status) {
+                case 2: //招商中
+                    $where['area']['lease_sn'] = '';
+                    break;
+                case 3: //已招商(待服务)
+                    $where['area'][] = ['lease_sn', '<>', ''];
+                    $where['lease'][] = ['start_date', '>', time()];
+                    break;
+                case 4: //已招商(服务中)
+                    $where['area'][] = ['lease_sn', '<>', ''];
+                    $where['lease'][] = ['start_date', '<', time()];
+                    $where['lease'][] = ['end_date', '>', time()];
+                    break;
+                case 5: //已招商(已逾期)
+                    $where['area'][] = ['lease_sn', '<>', ''];
+                    $where['lease'][] = ['start_date', '<', time()];
+                    break;
+            }
+        }
         $res = $this->areaService->listArea($where, $columns, $param['page'], $param['per_page']);
         return $this->code(200, "房间列表", $res);
     }

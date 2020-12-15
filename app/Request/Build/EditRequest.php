@@ -35,8 +35,8 @@ class EditRequest extends AbstractRequest
         return [
             "build_sn" => $this->input("build_sn", ''),
             "build_name" => $this->input("build_name", ''),
-            "build_size" => $this->input("build_size", 0),
-            "elevator_num" => $this->input("elevator_num", 0),
+            "build_size" =>(float)  $this->input("build_size", 0),
+            "elevator_num" =>(int)  $this->input("elevator_num", 0),
         ];
     }
 

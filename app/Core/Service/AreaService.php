@@ -93,26 +93,23 @@ class AreaService extends BaseService
 
     /**
      * 房间列表
-     * @param $where
+     * @param array $where
      * @param string[] $columns
      * @param int $page
      * @param int $perPage
      * @return array
      */
-    public function listArea($where, $columns = ['*'], int $page = 1, int $perPage = 15)
+    public function listArea(array $where, $columns = ['*'], int $page = 1, int $perPage = 15)
     {
+
         $yard_sn = $this->session->get('yard_sn');
-        if (is_array($where)) {
-            $where['yard_sn'] = $yard_sn;
-            $where = array_filter($where);
-        } else {
-            $where .= " and yard_sn='{$yard_sn}'";
-        }
+        $where['area']['yard_sn'] = $yard_sn;
+        $where['lease']['yard_sn'] = $yard_sn;
 
 
-        $res = $this->areaModel::query()->where($where)->select($columns)
-            ->with(['lease' => function ($query) {
-                $query->select(['lease_sn', 'tenant_name', 'lease_no', 'start_date', 'end_date']);
+        $res = $this->areaModel::query()->where($where['area'])->select($columns)
+            ->with(['lease' => function ($query) use ($where) {
+                $query->select(['lease_sn', 'tenant_name', 'lease_no', 'start_date', 'end_date'])->where($where['lease']);
 
             }])->with(['build' => function ($bq) {
                 $bq->select(['build_name', 'build_sn']);

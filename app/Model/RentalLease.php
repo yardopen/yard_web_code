@@ -1,10 +1,11 @@
 <?php
 
 declare (strict_types=1);
+
 namespace App\Model;
 
 /**
- * @property int $lease_id 
+ * @property int $lease_id
  * @property string $lease_sn 租约sn
  * @property string $lease_no 租约编号
  * @property string $yard_sn 园区sn
@@ -43,10 +44,5 @@ class RentalLease extends BaseModel
      * @var array
      */
     protected $fillable = ['lease_id', 'lease_sn', 'lease_no', 'yard_sn', 'creater_sn', 'start_date', 'end_date', 'wy_fee', 'lease_fee', 'area_json', 'tenant_sn', 'tenant_type', 'tenant_name', 'certificate_num', 'contact_name', 'contact_tel', 'creater_name', 'modifyer_sn', 'modifyer_name', 'created_at', 'updated_at', 'status', 'remark', 'sort'];
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = ['lease_id' => 'integer', 'start_date' => 'integer', 'end_date' => 'integer', 'wy_fee' => 'float', 'lease_fee' => 'float', 'creater_id' => 'integer', 'modifyer_id' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime', 'status' => 'integer', 'sort' => 'integer', 'tenant_type' => 'integer'];
+
 }

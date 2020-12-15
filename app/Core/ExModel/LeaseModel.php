@@ -21,7 +21,6 @@ class LeaseModel extends RentalLease
         'start_date' => 'datetime:Y-m-d',
         'end_date' => 'datetime:Y-m-d',
         'area_json' => 'array',
-        'tenant_json' => 'array'
     ];
 
 

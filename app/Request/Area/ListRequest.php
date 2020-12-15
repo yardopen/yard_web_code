@@ -39,11 +39,11 @@ class ListRequest extends AbstractRequest
         return [
             "area_no" => $this->input("area_no", ''),//房间编号
             "build_sn" => $this->input("build_sn", ''),//楼栋编号
-            "room_orientations" => $this->input("room_orientations", 0), //朝向
-            "area_type" => $this->input("area_type", 0), //类型
-            "room_status" => $this->input("room_status", 0), //状态
-            "per_page" => $this->input("per_page", 15),
-            "page" => $this->input("page", 1),
+            "room_orientations" => (int)$this->input("room_orientations", 0), //朝向
+            "area_type" => (int)$this->input("area_type", 0), //类型
+            "room_status" => (int)$this->input("room_status", 0), //状态
+            "per_page" => (int)$this->input("per_page", 15),
+            "page" => (int)$this->input("page", 1),
         ];
     }
 

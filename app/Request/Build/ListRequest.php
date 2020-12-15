@@ -33,8 +33,8 @@ class ListRequest extends AbstractRequest
     {
         return [
             "build_name" => $this->input("build_name", ''),
-            "page" => $this->input("page", 1),
-            "per_page" => $this->input("per_page", 15),
+            "page" =>(int)  $this->input("page", 1),
+            "per_page" =>(int)  $this->input("per_page", 15),
         ];
     }
 
